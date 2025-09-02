@@ -36,7 +36,7 @@ const EventShowcase = async () => {
     const secondRow = images.slice(Math.ceil(images.length / 2))
 
     return (
-        <section className="flex min-h-screen flex-col items-center justify-center py-20 text-center">
+        <section className="flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center sm:px-8 lg:px-16">
             {/* Title */}
             <TextScramble
                 duration={1}

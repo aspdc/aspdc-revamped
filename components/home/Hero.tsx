@@ -42,7 +42,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Main hero content */}
-            <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <div className="flex flex-1 flex-col items-center justify-center px-4 text-center sm:px-8 lg:px-16">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
