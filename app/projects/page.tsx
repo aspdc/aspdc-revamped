@@ -3,9 +3,22 @@ import { Dcardcode } from '@/components/Dcardcode'
 import { TextScramble } from '@/components/motion-primitives/text-scramble'
 import { Project } from '@/db/types'
 import { fetchProjects } from '@/db/queries'
+import EmptyStateCard from '@/components/EmptyStateCard'
 
 const Projects = async () => {
     const projects: Project[] = await fetchProjects()
+
+    if (!projects || projects.length === 0) {
+        return (
+            <main className="mx-auto flex min-h-screen max-w-5xl items-center justify-center px-8 py-12 md:py-32 lg:px-0">
+                <EmptyStateCard
+                    emoji="🛠️"
+                    heading="No Projects Found"
+                    subtext="Stay tuned — new projects will appear here soon!"
+                />
+            </main>
+        )
+    }
 
     return (
         <main className="mx-auto min-h-screen max-w-5xl px-8 py-12 md:py-32 lg:px-0">
