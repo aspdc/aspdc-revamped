@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 async function AllDigest() {
     const posts = await fetchAllDigest().then((res) => res?.data)
+    // this is new
 
     if (!posts || posts.length === 0) {
         return (
