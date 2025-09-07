@@ -32,6 +32,15 @@ export default function RootLayout({
             }}
         >
             <html lang="en">
+                <head>
+                    <link
+                        rel="icon"
+                        href="Frame2.png"
+                        type="image/png"
+                        sizes="any"
+                    />
+                    <link rel="apple-touch-icon" href="Frame2.png" />
+                </head>
                 <body
                     className={`${spaceGrotesk.className} secnone overflow-x-hidden antialiased`}
                 >
