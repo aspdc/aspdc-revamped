@@ -10,6 +10,7 @@ export default async function UpcomingEvents() {
             <TextScramble className="text-primary mb-8 text-2xl font-bold uppercase md:mb-16 lg:text-4xl">
                 Mark Your Calenders
             </TextScramble>
+            hello
             <UpcomingEventsPage events={upcomingEvent} />
         </main>
     )
