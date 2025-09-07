@@ -15,6 +15,13 @@ const Events = async () => {
                 Happening @ ASPDC
             </TextScramble>
             <BentoGrid>
+                {items.length === 0 && (
+                    <BentoCard
+                        name={'HElLO'}
+                        description={'j'} // Pass the array directly
+                        background={[]} // Pass the array directly
+                    />
+                )}
                 {items.map((item) => (
                     <BentoCard
                         key={item.id}
