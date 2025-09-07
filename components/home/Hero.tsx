@@ -11,9 +11,9 @@ import Image from 'next/image'
 const Hero = () => {
     const [isTrigger, setIsTrigger] = useState(true)
     return (
-        <main className="flex h-screen flex-col overflow-hidden text-white">
+        <main className="flex h-screen flex-col text-white">
             {/* Navbar */}
-            <motion.div className="z-10 hidden items-center justify-between px-15 py-6 lg:flex">
+            <motion.div className="z-10 hidden items-center justify-between px-4 py-6 lg:flex lg:px-8">
                 <motion.div
                     initial={{ x: -80, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -42,7 +42,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Main hero content */}
-            <div className="flex flex-1 flex-col items-center justify-center text-center">
+            <div className="flex flex-1 flex-col items-center justify-center px-4 text-center sm:px-6">
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

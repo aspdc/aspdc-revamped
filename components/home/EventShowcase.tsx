@@ -36,7 +36,7 @@ const EventShowcase = async () => {
     const secondRow = images.slice(Math.ceil(images.length / 2))
 
     return (
-        <section className="flex min-h-screen flex-col items-center justify-center py-20 text-center">
+        <section className="flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center sm:px-6 md:px-8">
             {/* Title */}
             <TextScramble
                 duration={1}
@@ -57,7 +57,7 @@ const EventShowcase = async () => {
             </TextEffect>
 
             {/* Gallery */}
-            <ScrollVelocityContainer className="my-12">
+            <ScrollVelocityContainer className="my-8 sm:my-10 md:my-12">
                 <ScrollVelocityRow direction={1} baseVelocity={10}>
                     {firstRow.map((img: any, idx: number) => (
                         <ImageCard key={`${img}-${idx}`} img={img} />
