@@ -32,6 +32,7 @@ export default function RootLayout({
             }}
         >
             <html lang="en">
+                <link rel="icon" href="/favicon.ico" />
                 <body
                     className={`${spaceGrotesk.className} secnone overflow-x-hidden antialiased`}
                 >
