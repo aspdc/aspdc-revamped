@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { CardBody, CardContainer, CardItem } from '@/components/ui/3d-card'
 import { Github } from 'lucide-react'
 
@@ -44,13 +44,17 @@ export function Dcardcode({
                 </CardItem>
 
                 <CardItem translateZ="70" className="mt-4 w-full">
-                    <img
-                        src={imgUrl ?? ''}
-                        height="500"
-                        width="500"
-                        className="h-40 w-full rounded-xl object-cover group-hover/card:shadow-xl sm:h-48"
-                        alt="thumbnail"
-                    />
+                    {imgUrl && (
+                        <Image
+                            src={imgUrl}
+                            height={500}
+                            width={500}
+                            className="h-40 w-full rounded-xl object-cover group-hover/card:shadow-xl sm:h-48"
+                            alt="thumbnail"
+                            quality={85}
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                    )}
                 </CardItem>
 
                 <div className="mt-4 flex items-center justify-between sm:mt-8">

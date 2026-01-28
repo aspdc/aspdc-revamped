@@ -54,3 +54,4 @@ next-env.d.ts
 /db/*.js
 /db/*.js.map
 /db/certificates.seed.ts
+.clerk/

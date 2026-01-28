@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { CardBody, CardContainer, CardItem } from '@/components/ui/3d-card'
 import {
     Dialog,
@@ -275,18 +276,16 @@ export default function ShipItClient({
                                     className="mt-4 w-full"
                                 >
                                     {getImageUrl(project.projectImageUrl) ? (
-                                        <img
+                                        <Image
                                             src={getImageUrl(
                                                 project.projectImageUrl
                                             )}
-                                            height="500"
-                                            width="500"
+                                            height={500}
+                                            width={500}
                                             className="h-40 w-full rounded-xl object-cover group-hover/card:shadow-xl sm:h-48"
                                             alt={project.projectName}
-                                            onError={(e) => {
-                                                e.currentTarget.style.display =
-                                                    'none'
-                                            }}
+                                            quality={85}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     ) : (
                                         <div className="flex h-40 w-full items-center justify-center rounded-xl bg-neutral-800/50 sm:h-48">

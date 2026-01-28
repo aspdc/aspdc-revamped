@@ -80,17 +80,19 @@ export function MrPeng({ messages, image }: MrPengProps) {
                     className="cursor-pointer transition-transform duration-200 hover:scale-110"
                     onClick={handlePetClick}
                 >
-                    <img
+                    <Image
                         src={image || '/mr-peng.png'}
                         alt="Mr. Peng - ASPDC Mascot"
-                        height={16}
-                        width={16}
+                        height={80}
+                        width={80}
                         className="pixel-perfect h-16 w-16 drop-shadow-lg md:h-20 md:w-20"
                         style={
                             {
                                 imageRendering: 'crisp-edges',
                             } as React.CSSProperties
                         }
+                        priority={false}
+                        quality={85}
                     />
                 </div>
             </div>

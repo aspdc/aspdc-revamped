@@ -1,8 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { cn } from '@/lib/utils'
 import { useEffect, useMemo, useState } from 'react'
+import { Suspense } from 'react'
+import Image from 'next/image'
 
 type Grid = {
     rows: number
@@ -91,37 +92,47 @@ export const PixelImage = ({
     }, [rows, cols, maxAnimationDelay])
 
     return (
-        <div className="relative h-full w-full select-none">
-            {pieces.map((piece, index) => (
-                <div
-                    key={index}
-                    className={cn(
-                        'absolute inset-0 transition-all ease-out',
-                        isVisible ? 'opacity-100' : 'opacity-0'
-                    )}
-                    style={{
-                        clipPath: piece.clipPath,
-                        transitionDelay: `${piece.delay}ms`,
-                        transitionDuration: `${pixelFadeInDuration}ms`,
-                    }}
-                >
-                    <img
-                        src={src}
-                        alt={`Pixel image piece ${index + 1}`}
+        <Suspense
+            fallback={
+                <div className="relative h-full w-full animate-pulse bg-gray-200 select-none" />
+            }
+        >
+            <div className="relative h-full w-full select-none">
+                {pieces.map((piece, index) => (
+                    <div
+                        key={index}
                         className={cn(
-                            'absolute inset-0 h-full w-full object-cover',
-                            grayscaleAnimation &&
-                                (showColor ? 'grayscale-0' : 'grayscale')
+                            'absolute inset-0 transition-all ease-out',
+                            isVisible ? 'opacity-100' : 'opacity-0'
                         )}
                         style={{
-                            transition: grayscaleAnimation
-                                ? `filter ${pixelFadeInDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
-                                : 'none',
+                            clipPath: piece.clipPath,
+                            transitionDelay: `${piece.delay}ms`,
+                            transitionDuration: `${pixelFadeInDuration}ms`,
                         }}
-                        draggable={false}
-                    />
-                </div>
-            ))}
-        </div>
+                    >
+                        <Image
+                            src={src}
+                            alt={`Pixel image piece ${index + 1}`}
+                            fill
+                            sizes="100%"
+                            className={cn(
+                                'absolute inset-0 h-full w-full object-cover',
+                                grayscaleAnimation &&
+                                    (showColor ? 'grayscale-0' : 'grayscale')
+                            )}
+                            style={{
+                                transition: grayscaleAnimation
+                                    ? `filter ${pixelFadeInDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
+                                    : 'none',
+                            }}
+                            draggable={false}
+                            quality={85}
+                            priority={false}
+                        />
+                    </div>
+                ))}
+            </div>
+        </Suspense>
     )
 }
