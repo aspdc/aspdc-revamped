@@ -67,9 +67,9 @@
         "projectName": "InterviewGPT",
         "shortProjectDescription": "InterviewGPT - AI Mock Interview Platform  An intelligent voice-based mock interview system built using Python, LiveKit, and Next.js. The platform simulates real interview scenarios by allowing users to select their role, experience level, and interview type (technical, HR, or behavioral).  It uses real-time speech recognition, AI-powered questioning, and dynamic follow-up logic to conduct realistic interviews, evaluate responses, and provide structured feedback on communication skills, technical understanding, and confidence.  Designed to help users practice interviews in a realistic environment and improve their performance through interactive, AI-driven conversations.",
         "gitHubRepositoryUrl": "https://github.com/JatinKevlani/InterviewGPT",
-        "liveProjectUrl": "https://www.jatinkevlani.tech/projects/InterviewGPT https://jatinkevlani.dev/",
+        "liveProjectUrl": "https://jatinkevlani.dev/",
         "projectImageUrl": "https://images2.imgbox.com/c1/76/bEda7zkQ_o.png",
-        "videoExplanationUrl": "https://drive.google.com/drive/folders/1HiJLL0jc5UFtPAwWUda53CMbWi3hY8oM?usp=sharing https://youtu.be/0QiWmSL7Iek"
+        "videoExplanationUrl": "https://youtu.be/0QiWmSL7Iek"
     },
     {
         "name": "Nikhil R Naraniya",

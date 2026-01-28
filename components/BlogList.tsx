@@ -31,22 +31,23 @@ export function BlogList({ posts }: { posts: Blog[] }) {
         )
 
     const handleShare = async ({ post }: { post: Blog }) => {
-        if (navigator.share) {
-            try {
+        try {
+            if (navigator.share) {
                 await navigator.share({
                     title: post.title,
                     text: `Check out this article: ${post.title} by ${post.author}`,
                     url: post.link,
                 })
-            } catch (error) {
-                console.error('Error sharing:', error)
-                toast.error('Failed to share the link.')
-            } finally {
-                navigator.clipboard.writeText(post.link)
+                toast.success('Post shared successfully!')
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                await navigator.clipboard.writeText(post.link)
+                toast.success('Copied the link to clipboard!')
+            } else {
+                toast.error('Clipboard API not supported on this device.')
             }
-        } else {
-            await navigator.clipboard.writeText(post.link)
-            toast.success('Copied the link to clipboard!')
+        } catch (error) {
+            console.error('Error sharing:', error)
+            toast.error('Failed to share the link.')
         }
     }
 

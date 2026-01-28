@@ -54,4 +54,6 @@ next-env.d.ts
 /db/*.js
 /db/*.js.map
 /db/certificates.seed.ts
-.clerk/
+
+# certificate data (contains plain tokens)
+/db/certificates.json
