@@ -72,3 +72,24 @@ export const leaderboardUserSchema = z.object({
 })
 
 export const leaderboardUserUpdateSchema = leaderboardUserSchema.partial()
+
+// Tournament Contest schemas
+export const tournamentContestSchema = z.object({
+    name: z.string().min(1, 'Contest name is required'),
+})
+
+// Tournament Participant schemas
+export const tournamentParticipantSchema = z.object({
+    name: z.string().min(1, 'Name is required'),
+    codeforcesHandle: z.string().min(1, 'Codeforces handle is required'),
+})
+
+export const tournamentParticipantUpdateSchema =
+    tournamentParticipantSchema.partial()
+
+// Tournament Score schemas
+export const tournamentScoreSchema = z.object({
+    participantId: z.string().uuid('Invalid participant'),
+    contestId: z.string().uuid('Invalid contest'),
+    points: z.number().int().min(0, 'Points must be non-negative'),
+})

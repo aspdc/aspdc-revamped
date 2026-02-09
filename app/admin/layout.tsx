@@ -24,6 +24,7 @@ async function AdminLayoutContent({ children }: { children: React.ReactNode }) {
         { href: '/admin/projects', label: 'Projects' },
         { href: '/admin/upcoming', label: 'Upcoming Events' },
         { href: '/admin/leaderboard', label: 'Leaderboard' },
+        { href: '/admin/tournament', label: 'Tournament' },
     ]
 
     return (

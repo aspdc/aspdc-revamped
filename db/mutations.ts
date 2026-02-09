@@ -9,6 +9,9 @@ import {
     leaderboard,
     leaderboardUsers,
     projects,
+    tournamentContests,
+    tournamentParticipants,
+    tournamentScores,
     upcomingEvents,
     votes,
 } from '@/db/schema'
@@ -24,8 +27,12 @@ import type {
     NewLeaderboardEntry,
     NewLeaderboardUser,
     NewProject,
+    NewTournamentContest,
+    NewTournamentParticipant,
+    NewTournamentScore,
     NewUpcomingEvent,
     Project,
+    TournamentParticipant,
     UpcomingEvent,
 } from '@/db/types'
 import { eq, and } from 'drizzle-orm'
@@ -376,6 +383,94 @@ export async function removeVote(projectId: string) {
         }
     } catch (error) {
         console.error('Error in removeVote:', error)
+        throw error
+    }
+}
+
+// ----------------- Tournament -----------------
+export async function addTournamentContest(contest: NewTournamentContest) {
+    try {
+        await db.insert(tournamentContests).values(contest)
+    } catch (error) {
+        console.error('Error in addTournamentContest:', error)
+        throw error
+    }
+}
+
+export async function deleteTournamentContest(id: string) {
+    try {
+        await db.delete(tournamentContests).where(eq(tournamentContests.id, id))
+    } catch (error) {
+        console.error('Error in deleteTournamentContest:', error)
+        throw error
+    }
+}
+
+export async function addTournamentParticipant(
+    participant: NewTournamentParticipant
+) {
+    try {
+        await db.insert(tournamentParticipants).values(participant)
+    } catch (error) {
+        console.error('Error in addTournamentParticipant:', error)
+        throw error
+    }
+}
+
+export async function updateTournamentParticipant(
+    id: string,
+    updates: Partial<TournamentParticipant>
+) {
+    try {
+        return await db
+            .update(tournamentParticipants)
+            .set(updates)
+            .where(eq(tournamentParticipants.id, id))
+            .returning()
+    } catch (error) {
+        console.error('Error in updateTournamentParticipant:', error)
+        throw error
+    }
+}
+
+export async function deleteTournamentParticipant(id: string) {
+    try {
+        await db
+            .delete(tournamentParticipants)
+            .where(eq(tournamentParticipants.id, id))
+    } catch (error) {
+        console.error('Error in deleteTournamentParticipant:', error)
+        throw error
+    }
+}
+
+export async function addTournamentScore(score: NewTournamentScore) {
+    try {
+        await db.insert(tournamentScores).values(score)
+    } catch (error) {
+        console.error('Error in addTournamentScore:', error)
+        throw error
+    }
+}
+
+export async function updateTournamentScore(id: string, points: number) {
+    try {
+        return await db
+            .update(tournamentScores)
+            .set({ points })
+            .where(eq(tournamentScores.id, id))
+            .returning()
+    } catch (error) {
+        console.error('Error in updateTournamentScore:', error)
+        throw error
+    }
+}
+
+export async function deleteTournamentScore(id: string) {
+    try {
+        await db.delete(tournamentScores).where(eq(tournamentScores.id, id))
+    } catch (error) {
+        console.error('Error in deleteTournamentScore:', error)
         throw error
     }
 }

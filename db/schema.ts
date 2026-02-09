@@ -206,3 +206,69 @@ export const votes = pgTable(
         ),
     ]
 )
+
+// Tournament Contests
+export const tournamentContests = pgTable('tournament_contests', {
+    id: uuid().defaultRandom().primaryKey(),
+    name: text().notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
+// Tournament Participants
+export const tournamentParticipants = pgTable('tournament_participants', {
+    id: uuid().defaultRandom().primaryKey(),
+    name: text().notNull(),
+    codeforcesHandle: text('codeforces_handle').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
+// Tournament Scores (junction table)
+export const tournamentScores = pgTable(
+    'tournament_scores',
+    {
+        id: uuid().defaultRandom().primaryKey(),
+        participantId: uuid('participant_id')
+            .notNull()
+            .references(() => tournamentParticipants.id, {
+                onDelete: 'cascade',
+            }),
+        contestId: uuid('contest_id')
+            .notNull()
+            .references(() => tournamentContests.id, { onDelete: 'cascade' }),
+        points: integer().notNull(),
+        createdAt: timestamp('created_at').defaultNow().notNull(),
+    },
+    (table) => [
+        index('tournament_scores_participantId_idx').on(table.participantId),
+        index('tournament_scores_contestId_idx').on(table.contestId),
+    ]
+)
+
+// Tournament Relations
+export const tournamentParticipantRelations = relations(
+    tournamentParticipants,
+    ({ many }) => ({
+        scores: many(tournamentScores),
+    })
+)
+
+export const tournamentContestRelations = relations(
+    tournamentContests,
+    ({ many }) => ({
+        scores: many(tournamentScores),
+    })
+)
+
+export const tournamentScoreRelations = relations(
+    tournamentScores,
+    ({ one }) => ({
+        participant: one(tournamentParticipants, {
+            fields: [tournamentScores.participantId],
+            references: [tournamentParticipants.id],
+        }),
+        contest: one(tournamentContests, {
+            fields: [tournamentScores.contestId],
+            references: [tournamentContests.id],
+        }),
+    })
+)

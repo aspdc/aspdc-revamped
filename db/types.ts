@@ -104,3 +104,39 @@ export type NewProject = Omit<Project, 'id' | 'createdAt'>
 export type NewUpcomingEvent = Omit<UpcomingEvent, 'id' | 'createdAt'>
 export type NewLeaderboardUser = Omit<LeaderboardUser, 'id' | 'createdAt'>
 export type NewCodeforcesUser = Omit<CodeforcesUser, 'id' | 'createdAt'>
+
+// Tournament types
+export type TournamentContest = {
+    id: string
+    name: string
+    createdAt: Date
+}
+
+export type TournamentParticipant = {
+    id: string
+    name: string
+    codeforcesHandle: string
+    createdAt: Date
+}
+
+export type TournamentScore = {
+    id: string
+    participantId: string
+    contestId: string
+    points: number
+    createdAt: Date
+}
+
+export type NewTournamentContest = Omit<TournamentContest, 'id' | 'createdAt'>
+export type NewTournamentParticipant = Omit<
+    TournamentParticipant,
+    'id' | 'createdAt'
+>
+export type NewTournamentScore = Omit<TournamentScore, 'id' | 'createdAt'>
+
+// Aggregated tournament leaderboard entry
+export type TournamentLeaderboardEntry = {
+    participant: TournamentParticipant
+    scores: { contest: TournamentContest; points: number }[]
+    totalPoints: number
+}

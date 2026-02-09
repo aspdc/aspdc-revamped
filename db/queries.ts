@@ -7,6 +7,9 @@ import {
     leaderboard,
     leaderboardUsers,
     projects,
+    tournamentContests,
+    tournamentParticipants,
+    tournamentScores,
     upcomingEvents,
     votes,
 } from '@/db/schema'
@@ -17,6 +20,10 @@ import {
     LeaderboardEntry,
     LeaderboardUser,
     Project,
+    TournamentContest,
+    TournamentLeaderboardEntry,
+    TournamentParticipant,
+    TournamentScore,
     UpcomingEvent,
 } from '@/db/types'
 import { asc, desc, eq, sql } from 'drizzle-orm'
@@ -191,6 +198,96 @@ export async function fetchLeaderboardUsers(): Promise<LeaderboardUser[]> {
             .orderBy(asc(leaderboardUsers.createdAt))
     } catch (error) {
         console.error('Error fetching leaderboard users:', error)
+        return []
+    }
+}
+
+// ----------------- Tournament -----------------
+export async function fetchTournamentContests(): Promise<TournamentContest[]> {
+    'use cache'
+    cacheLife('minutes')
+
+    try {
+        return await db
+            .select()
+            .from(tournamentContests)
+            .orderBy(asc(tournamentContests.createdAt))
+    } catch (error) {
+        console.error('Error fetching tournament contests:', error)
+        return []
+    }
+}
+
+export async function fetchTournamentParticipants(): Promise<
+    TournamentParticipant[]
+> {
+    'use cache'
+    cacheLife('minutes')
+
+    try {
+        return await db
+            .select()
+            .from(tournamentParticipants)
+            .orderBy(asc(tournamentParticipants.name))
+    } catch (error) {
+        console.error('Error fetching tournament participants:', error)
+        return []
+    }
+}
+
+export async function fetchTournamentScores(): Promise<TournamentScore[]> {
+    'use cache'
+    cacheLife('minutes')
+
+    try {
+        return await db.select().from(tournamentScores)
+    } catch (error) {
+        console.error('Error fetching tournament scores:', error)
+        return []
+    }
+}
+
+export async function fetchTournamentLeaderboard(): Promise<
+    TournamentLeaderboardEntry[]
+> {
+    'use cache'
+    cacheLife('minutes')
+
+    try {
+        const participants = await db.select().from(tournamentParticipants)
+        const scores = await db.select().from(tournamentScores)
+        const contests = await db.select().from(tournamentContests)
+
+        const contestMap = new Map(contests.map((c) => [c.id, c]))
+
+        const leaderboard: TournamentLeaderboardEntry[] = participants.map(
+            (p) => {
+                const participantScores = scores.filter(
+                    (s) => s.participantId === p.id
+                )
+                const scoreDetails = participantScores.map((s) => ({
+                    contest: contestMap.get(s.contestId)!,
+                    points: s.points,
+                }))
+                const totalPoints = participantScores.reduce(
+                    (sum, s) => sum + s.points,
+                    0
+                )
+
+                return {
+                    participant: p,
+                    scores: scoreDetails,
+                    totalPoints,
+                }
+            }
+        )
+
+        // Sort by total points descending
+        leaderboard.sort((a, b) => b.totalPoints - a.totalPoints)
+
+        return leaderboard
+    } catch (error) {
+        console.error('Error fetching tournament leaderboard:', error)
         return []
     }
 }
