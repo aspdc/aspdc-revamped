@@ -12,6 +12,7 @@ import {
     RefreshCcw,
 } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
 type UnistopEvent = {
@@ -38,6 +39,13 @@ type UnistopResponse = {
 }
 
 const UNISTOP_LIMIT = 12
+const VALID_TABS = ['aspdc', 'unistop'] as const
+
+function getValidTab(tab: string | null): (typeof VALID_TABS)[number] {
+    return VALID_TABS.includes(tab as (typeof VALID_TABS)[number])
+        ? (tab as (typeof VALID_TABS)[number])
+        : 'aspdc'
+}
 
 function UnistopEventsView() {
     const [events, setEvents] = useState<UnistopEvent[]>([])
@@ -247,8 +255,21 @@ export default function UpcomingEventsTabs({
 }: {
     events: UpcomingEvent[]
 }) {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const search = searchParams.get('search')
+    const tab = getValidTab(search)
+
+    const handleTabChange = (value: string) => {
+        const validTab = getValidTab(value)
+        const params = new URLSearchParams(searchParams.toString())
+        params.set('search', validTab)
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    }
+
     return (
-        <Tabs defaultValue="aspdc" className="w-full">
+        <Tabs value={tab} onValueChange={handleTabChange} className="w-full">
             <TabsList className="mb-8">
                 <TabsTrigger value="aspdc">ASPDC</TabsTrigger>
                 <TabsTrigger value="unistop">Unistop</TabsTrigger>
