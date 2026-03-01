@@ -1,5 +1,5 @@
 import { TextScramble } from '@/components/motion-primitives/text-scramble'
-import UpcomingEventsPage from '@/components/UpcomingEvents'
+import UpcomingEventsTabs from '@/components/UpcomingEventsTabs'
 import { fetchUpcomingEvents } from '@/db/queries'
 import { UpcomingEvent } from '@/db/types'
 import { Suspense } from 'react'
@@ -21,7 +21,7 @@ export default async function UpcomingEvents() {
                     </div>
                 }
             >
-                <UpcomingEventsPage events={upcomingEvent} />
+                <UpcomingEventsTabs events={upcomingEvent} />
             </Suspense>
         </main>
     )
