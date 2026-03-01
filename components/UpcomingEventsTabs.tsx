@@ -71,7 +71,7 @@ function UnistopEventsView() {
                     limit: String(UNISTOP_LIMIT),
                 })
                 const response = await fetch(
-                    `https://unistop-backend.vercel.app/api/events?${search.toString()}`,
+                    `/api/unistop/events?${search.toString()}`,
                     {
                         signal: controller.signal,
                         cache: 'no-store',
