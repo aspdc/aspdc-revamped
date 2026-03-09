@@ -47,14 +47,14 @@
         "members": [
             {
                 "id": 4,
-                "name": "Harshil Upadhyay",
+                "name": "Sahil Patel",
                 "role": "Lead",
-                "avatar": "/team/harshil.jpg",
-                "blur": "/team/tiny/harshil.jpeg",
-                "github": "https://github.com/Harshil000",
-                "instagram": null,
-                "x": null,
-                "linkedin": "https://www.linkedin.com/in/harshil-upadhyay-4285b2315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                "avatar": "/team/sahil.jpg",
+                "blur": "/team/tiny/sahil.jpeg",
+                "github": "https://github.com/Sahil-796",
+                "instagram": "https://www.instagram.com/sahil_patel006__",
+                "x": "https://x.com/SahilPa82684047",
+                "linkedin": null
             },
             {
                 "id": 5,
