@@ -7,7 +7,7 @@ const Navbar = () => {
         { name: 'Team', url: '/team' },
         { name: 'Upcoming', url: '/upcoming' },
         { name: 'Events', url: '/events' },
-        { name: 'Achievments', url: '/achievements' },
+        { name: 'Achievements', url: '/achievements' },
         { name: 'Projects', url: '/projects' },
         { name: 'Digest', url: '/digest' },
         { name: 'Blogs', url: '/blogs' },
@@ -20,7 +20,7 @@ const Navbar = () => {
         { name: 'Upcoming', url: '/upcoming' },
         { name: 'Events', url: '/events' },
         { name: 'Digest', url: '/digest' },
-        { name: 'Achievments', url: '/achievements' },
+        { name: 'Achievements', url: '/achievements' },
         { name: 'Leaderboard', url: '/leaderboard' },
     ]
 
