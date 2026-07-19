@@ -231,6 +231,23 @@ export async function fetchLabProfileByUserId(
     }
 }
 
+/** Uncached read for analysis / mutations that need the latest row. */
+export async function findLabProfileByUserId(
+    userId: string
+): Promise<LabProfile | null> {
+    try {
+        const rows = await db
+            .select()
+            .from(labProfiles)
+            .where(eq(labProfiles.userId, userId))
+            .limit(1)
+        return rows[0] ? mapLabProfile(rows[0]) : null
+    } catch (error) {
+        console.error('Error finding lab profile by userId:', error)
+        return null
+    }
+}
+
 export async function fetchLabProfileByGithubUsername(
     githubUsername: string
 ): Promise<LabProfile | null> {

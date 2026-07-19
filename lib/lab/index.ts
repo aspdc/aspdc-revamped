@@ -10,6 +10,17 @@ export { emptyTraitVector, isTraitId, scoreTraits } from './traits'
 export { fetchGitHubSnapshot } from './github'
 export { getGitHubAccessToken } from './github-token'
 export {
+    SNAPSHOT_MAX_AGE_MS,
+    isSnapshotFresh,
+    persistGitHubSnapshot,
+    readPersistedGitHubSnapshot,
+    resolveGitHubSnapshot,
+    runAnalysisPipeline,
+    type AnalysisPipelineResult,
+    type CachedGitHubSnapshot,
+    type PersistedGitHubSnapshot,
+} from './analyze'
+export {
     CHARACTER_PROFILES,
     assignCharacter,
     type CharacterId,
