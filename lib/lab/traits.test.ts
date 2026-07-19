@@ -103,6 +103,120 @@ describe('scoreTraits', () => {
         expect(regular.Consistency).toBeGreaterThan(sporadic.Consistency)
     })
 
+    it('gives a typical undergrad profile mid-range Builder and Consistency scores', () => {
+        const base = new Date('2024-06-01T12:00:00.000Z').getTime()
+        const day = 24 * 60 * 60 * 1000
+        const vector = scoreTraits(
+            emptySnapshot({
+                followers: 4,
+                following: 10,
+                publicRepos: 6,
+                repos: [
+                    {
+                        name: 'dsa-practice',
+                        language: 'C++',
+                        topicsCount: 1,
+                        hasDescription: true,
+                        isFork: false,
+                        stargazersCount: 1,
+                        forksCount: 0,
+                    },
+                    {
+                        name: 'web-lab',
+                        language: 'TypeScript',
+                        topicsCount: 2,
+                        hasDescription: true,
+                        isFork: false,
+                        stargazersCount: 0,
+                        forksCount: 0,
+                    },
+                    {
+                        name: 'ml-mini-project',
+                        language: 'Python',
+                        topicsCount: 1,
+                        hasDescription: true,
+                        isFork: false,
+                        stargazersCount: 2,
+                        forksCount: 1,
+                    },
+                    {
+                        name: 'course-notes',
+                        language: 'Markdown',
+                        topicsCount: 0,
+                        hasDescription: false,
+                        isFork: false,
+                        stargazersCount: 0,
+                        forksCount: 0,
+                    },
+                    {
+                        name: 'forked-starter',
+                        language: 'JavaScript',
+                        topicsCount: 0,
+                        hasDescription: false,
+                        isFork: true,
+                        stargazersCount: 0,
+                        forksCount: 0,
+                    },
+                ],
+                events: Array.from({ length: 12 }, (_, i) => ({
+                    type: i % 5 === 0 ? 'PullRequestEvent' : 'PushEvent',
+                    createdAt: new Date(base + i * 3 * day).toISOString(),
+                })),
+            })
+        )
+
+        assertValidVector(vector)
+        expect(vector.Builder).toBeGreaterThanOrEqual(35)
+        expect(vector.Builder).toBeLessThanOrEqual(90)
+        expect(vector.Consistency).toBeGreaterThanOrEqual(30)
+        expect(vector.Communication).toBeLessThan(vector.Builder)
+        expect(vector.Leadership).toBeLessThan(vector.Builder)
+    })
+
+    it('raises Leadership and Mentor when followers and following are farmed', () => {
+        const quiet = scoreTraits(
+            emptySnapshot({
+                followers: 1,
+                following: 2,
+                publicRepos: 3,
+                repos: [
+                    {
+                        name: 'a',
+                        language: 'Python',
+                        topicsCount: 0,
+                        hasDescription: true,
+                        isFork: false,
+                        stargazersCount: 0,
+                        forksCount: 0,
+                    },
+                ],
+            })
+        )
+        const networked = scoreTraits(
+            emptySnapshot({
+                followers: 25,
+                following: 40,
+                publicRepos: 3,
+                repos: [
+                    {
+                        name: 'a',
+                        language: 'Python',
+                        topicsCount: 0,
+                        hasDescription: true,
+                        isFork: false,
+                        stargazersCount: 0,
+                        forksCount: 0,
+                    },
+                ],
+            })
+        )
+
+        expect(networked.Leadership).toBeGreaterThan(quiet.Leadership)
+        expect(networked.Mentor).toBeGreaterThan(quiet.Mentor)
+        expect(networked.Communication).toBeGreaterThan(quiet.Communication)
+        expect(networked.OpenSource).toBeGreaterThan(quiet.OpenSource)
+    })
+
     it('keeps scores in range when star and fork counts are extreme', () => {
         const vector = scoreTraits(
             emptySnapshot({

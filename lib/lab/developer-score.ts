@@ -1,21 +1,21 @@
 import { TRAIT_IDS, type TraitId, type TraitVector } from './types'
 
 const WEIGHTS: Record<TraitId, number> = {
-    Builder: 1.2,
-    Architect: 1.1,
-    Scientist: 1.1,
-    Explorer: 0.9,
-    TeamPlayer: 1.0,
-    Mentor: 0.9,
-    Leadership: 1.1,
-    Consistency: 1.2,
-    Discipline: 1.2,
-    Curiosity: 1.0,
-    Creativity: 1.0,
-    Documentation: 0.8,
-    OpenSource: 0.9,
-    Communication: 1.0,
-    Chaos: 0.6,
+    Builder: 1.4,
+    Architect: 1.0,
+    Scientist: 1.2,
+    Explorer: 1.1,
+    TeamPlayer: 0.85,
+    Mentor: 0.45,
+    Leadership: 0.5,
+    Consistency: 1.4,
+    Discipline: 1.3,
+    Curiosity: 1.2,
+    Creativity: 1.2,
+    Documentation: 1.0,
+    OpenSource: 0.5,
+    Communication: 0.5,
+    Chaos: 0.5,
 }
 
 const TOTAL_WEIGHT = TRAIT_IDS.reduce((sum, id) => sum + WEIGHTS[id], 0)

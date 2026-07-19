@@ -8,15 +8,14 @@ export type CharacterId =
     | 'gus-fring'
     | 'mike-ehrmantraut'
     | 'saul-goodman'
-    | 'gale-boetticher'
     | 'hank-schrader'
     | 'tuco-salamanca'
     | 'todd'
     | 'skinny-pete'
     | 'badger'
     | 'lydia'
-    | 'don-eladio'
-    | 'the-cousins'
+    | 'hector-salamanca'
+    | 'lalo-salamanca'
 
 export type CharacterProfile = {
     id: CharacterId
@@ -182,29 +181,6 @@ export const CHARACTER_PROFILES: CharacterProfile[] = [
         }),
     },
     {
-        id: 'gale-boetticher',
-        name: 'Gale Boetticher',
-        summary:
-            'Gentle scientist who documents everything and treats the craft as poetry.',
-        traits: traits({
-            Builder: 70,
-            Architect: 75,
-            Scientist: 96,
-            Explorer: 60,
-            TeamPlayer: 65,
-            Mentor: 80,
-            Leadership: 35,
-            Consistency: 88,
-            Discipline: 90,
-            Curiosity: 92,
-            Creativity: 70,
-            Documentation: 98,
-            OpenSource: 55,
-            Communication: 60,
-            Chaos: 10,
-        }),
-    },
-    {
         id: 'hank-schrader',
         name: 'Hank Schrader',
         summary:
@@ -343,49 +319,49 @@ export const CHARACTER_PROFILES: CharacterProfile[] = [
         }),
     },
     {
-        id: 'don-eladio',
-        name: 'Don Eladio',
+        id: 'hector-salamanca',
+        name: 'Hector Salamanca',
         summary:
-            'Old-school empire energy — delegates freely, expects results, hosts the party.',
+            'Stubborn veteran energy — short on words, long on persistence, refuses to quit the lab.',
         traits: traits({
-            Builder: 55,
-            Architect: 60,
+            Builder: 70,
+            Architect: 45,
             Scientist: 35,
-            Explorer: 40,
-            TeamPlayer: 50,
-            Mentor: 45,
-            Leadership: 92,
-            Consistency: 60,
-            Discipline: 55,
-            Curiosity: 35,
-            Creativity: 40,
+            Explorer: 30,
+            TeamPlayer: 40,
+            Mentor: 55,
+            Leadership: 80,
+            Consistency: 85,
+            Discipline: 88,
+            Curiosity: 25,
+            Creativity: 30,
             Documentation: 35,
-            OpenSource: 30,
-            Communication: 75,
-            Chaos: 60,
+            OpenSource: 25,
+            Communication: 20,
+            Chaos: 55,
         }),
     },
     {
-        id: 'the-cousins',
-        name: 'The Cousins',
+        id: 'lalo-salamanca',
+        name: 'Lalo Salamanca',
         summary:
-            'Silent dual-core duo: relentless focus, zero small talk, mission over everything.',
+            'Charming operator who makes bold moves look easy and keeps everyone slightly nervous.',
         traits: traits({
-            Builder: 85,
-            Architect: 50,
-            Scientist: 40,
-            Explorer: 30,
-            TeamPlayer: 95,
-            Mentor: 20,
-            Leadership: 45,
-            Consistency: 90,
-            Discipline: 95,
-            Curiosity: 25,
-            Creativity: 20,
-            Documentation: 40,
-            OpenSource: 15,
-            Communication: 10,
-            Chaos: 35,
+            Builder: 75,
+            Architect: 70,
+            Scientist: 55,
+            Explorer: 65,
+            TeamPlayer: 60,
+            Mentor: 40,
+            Leadership: 88,
+            Consistency: 70,
+            Discipline: 75,
+            Curiosity: 70,
+            Creativity: 80,
+            Documentation: 45,
+            OpenSource: 40,
+            Communication: 90,
+            Chaos: 70,
         }),
     },
 ]

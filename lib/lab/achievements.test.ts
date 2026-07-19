@@ -44,27 +44,25 @@ describe('unlockAchievements', () => {
 
     it('unlocks Science, Bitch! only with scientist score and enough languages', () => {
         const multilingual = snapshot({
-            repos: ['TypeScript', 'Python', 'Go', 'Rust', 'Elixir'].map(
-                (language, index) => ({
-                    name: `lab-${index}`,
-                    language,
-                    topicsCount: 1,
-                    hasDescription: true,
-                    isFork: false,
-                    stargazersCount: 0,
-                    forksCount: 0,
-                })
-            ),
+            repos: ['TypeScript', 'Python', 'Go'].map((language, index) => ({
+                name: `lab-${index}`,
+                language,
+                topicsCount: 1,
+                hasDescription: true,
+                isFork: false,
+                stargazersCount: 0,
+                forksCount: 0,
+            })),
         })
 
         const unlocked = unlockAchievements(
-            vector({ Scientist: 90 }),
+            vector({ Scientist: 80 }),
             multilingual
         )
         expect(unlocked.map((a) => a.id)).toContain('science-bitch')
 
         const locked = unlockAchievements(
-            vector({ Scientist: 90 }),
+            vector({ Scientist: 80 }),
             snapshot({
                 repos: [
                     {

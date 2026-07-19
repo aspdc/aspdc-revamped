@@ -73,7 +73,7 @@ function regularityScore(timestamps: number[]): number {
     const stdDev = Math.sqrt(variance)
 
     const regularity = 1 / (1 + stdDev)
-    const density = softNorm(timestamps.length, 20, 0.1)
+    const density = softNorm(timestamps.length, 8, 0.2)
     return combine([
         { weight: 0.7, value: regularity * 100 },
         { weight: 0.3, value: density },
@@ -104,13 +104,7 @@ function popularitySignal(snapshot: GitHubSnapshot): number {
         0
     )
     const forks = snapshot.repos.reduce((sum, repo) => sum + repo.forksCount, 0)
-    return softNorm(stars + forks * 2, 40, 0.04)
-}
-
-function accountAgeDays(snapshot: GitHubSnapshot): number {
-    const created = Date.parse(snapshot.accountCreatedAt)
-    if (!Number.isFinite(created)) return 0
-    return Math.max(0, (Date.now() - created) / MS_PER_DAY)
+    return softNorm(stars + forks * 2, 4, 0.35)
 }
 
 export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
@@ -139,23 +133,21 @@ export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
         countEventType(events, 'IssueCommentEvent') +
         countEventType(events, 'CommitCommentEvent')
     const popularity = popularitySignal(snapshot)
-    const ageScore = softNorm(accountAgeDays(snapshot), 365, 0.01)
-    const followerScore = softNorm(snapshot.followers, 25, 0.08)
-    const followingScore = softNorm(snapshot.following, 25, 0.08)
-    const associateRatio = softNorm(
-        snapshot.followers / (snapshot.following + 1),
-        1.2,
-        1.2
-    )
-    const languageScore = softNorm(languages.length, 4, 0.45)
-    const topicScore = softNorm(topicsTotal, 12, 0.15)
-    const repoScore = softNorm(originalRepos.length, 8, 0.2)
-    const pushScore = softNorm(pushEvents, 20, 0.1)
+    const followerScore = softNorm(snapshot.followers, 10, 0.2)
+    const followingScore = softNorm(snapshot.following, 20, 0.12)
+    const networkScore = combine([
+        { weight: 0.55, value: followerScore },
+        { weight: 0.45, value: followingScore },
+    ])
+    const languageScore = softNorm(languages.length, 3, 0.55)
+    const topicScore = softNorm(topicsTotal, 4, 0.35)
+    const repoScore = softNorm(originalRepos.length, 4, 0.35)
+    const pushScore = softNorm(pushEvents, 8, 0.2)
     const consistency = regularityScore(timestamps)
     const discipline = combine([
         {
             weight: 0.55,
-            value: softNorm(activeDays, WINDOW_DAYS * 0.35, 0.08),
+            value: softNorm(activeDays, WINDOW_DAYS * 0.15, 0.12),
         },
         { weight: 0.3, value: consistency },
         { weight: 0.15, value: pushScore },
@@ -166,8 +158,8 @@ export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
             weight: 0.3,
             value: softNorm(
                 Math.abs(pushEvents - issueEvents - prEvents),
-                15,
-                0.1
+                6,
+                0.2
             ),
         },
         {
@@ -179,52 +171,53 @@ export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
     const scores: TraitVector = {
         Builder: combine([
             { weight: 0.45, value: repoScore },
-            { weight: 0.35, value: pushScore },
-            { weight: 0.15, value: originalRatio * 100 },
+            { weight: 0.4, value: pushScore },
+            { weight: 0.1, value: originalRatio * 100 },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Architect: combine([
-            { weight: 0.4, value: topicScore },
-            { weight: 0.35, value: describedRatio * 100 },
+            { weight: 0.35, value: topicScore },
+            { weight: 0.4, value: describedRatio * 100 },
             { weight: 0.2, value: languageScore },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Scientist: combine([
             { weight: 0.55, value: languageScore },
             { weight: 0.25, value: topicScore },
-            { weight: 0.15, value: softNorm(repos.length, 10, 0.15) },
+            { weight: 0.15, value: softNorm(repos.length, 5, 0.3) },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Explorer: combine([
             { weight: 0.4, value: languageScore },
             { weight: 0.35, value: topicScore },
-            { weight: 0.2, value: softNorm(repos.length, 15, 0.12) },
+            { weight: 0.2, value: softNorm(repos.length, 6, 0.25) },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         TeamPlayer: combine([
-            { weight: 0.4, value: softNorm(prEvents, 8, 0.25) },
-            { weight: 0.3, value: softNorm(reviewEvents, 5, 0.3) },
-            { weight: 0.25, value: followerScore },
+            { weight: 0.45, value: networkScore },
+            { weight: 0.25, value: softNorm(prEvents, 2, 0.8) },
+            { weight: 0.15, value: softNorm(reviewEvents, 1, 1.2) },
+            { weight: 0.1, value: followingScore },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Mentor: combine([
-            { weight: 0.4, value: softNorm(commentEvents, 10, 0.2) },
-            { weight: 0.3, value: softNorm(reviewEvents, 5, 0.3) },
-            { weight: 0.25, value: followingScore },
+            { weight: 0.55, value: followingScore },
+            { weight: 0.25, value: followerScore },
+            { weight: 0.15, value: softNorm(commentEvents, 3, 0.45) },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Leadership: combine([
-            { weight: 0.35, value: followerScore },
-            { weight: 0.3, value: associateRatio },
-            { weight: 0.3, value: softNorm(reviewEvents + prEvents, 10, 0.2) },
+            { weight: 0.55, value: followerScore },
+            { weight: 0.3, value: followingScore },
+            { weight: 0.1, value: softNorm(prEvents + reviewEvents, 3, 0.45) },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Consistency: consistency,
         Discipline: discipline,
         Curiosity: combine([
             { weight: 0.45, value: languageScore },
-            { weight: 0.35, value: topicScore },
-            { weight: 0.15, value: softNorm(events.length, 30, 0.08) },
+            { weight: 0.3, value: topicScore },
+            { weight: 0.2, value: softNorm(events.length, 10, 0.15) },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Creativity: combine([
@@ -237,23 +230,38 @@ export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Documentation: combine([
-            { weight: 0.7, value: describedRatio * 100 },
-            { weight: 0.25, value: topicScore },
+            { weight: 0.75, value: describedRatio * 100 },
+            { weight: 0.2, value: topicScore },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         OpenSource: combine([
-            { weight: 0.45, value: originalRatio * 100 },
-            { weight: 0.35, value: repoScore },
-            { weight: 0.15, value: ageScore },
+            { weight: 0.4, value: followerScore },
+            { weight: 0.35, value: followingScore },
+            { weight: 0.15, value: originalRatio * 100 },
+            { weight: 0.05, value: repoScore },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Communication: combine([
-            { weight: 0.4, value: softNorm(issueEvents, 10, 0.2) },
-            { weight: 0.35, value: softNorm(commentEvents, 10, 0.2) },
-            { weight: 0.2, value: softNorm(prEvents, 8, 0.25) },
+            { weight: 0.4, value: followerScore },
+            { weight: 0.35, value: followingScore },
+            {
+                weight: 0.15,
+                value: softNorm(issueEvents + commentEvents, 3, 0.45),
+            },
+            { weight: 0.05, value: describedRatio * 100 },
             { weight: STAR_FORK_WEIGHT, value: popularity },
         ]),
         Chaos: chaos,
+    }
+
+    const tonedDown: TraitId[] = [
+        'Mentor',
+        'Leadership',
+        'OpenSource',
+        'Communication',
+    ]
+    for (const trait of tonedDown) {
+        scores[trait] = clamp(Math.round(scores[trait] * 0.75), 0, 100)
     }
 
     for (const trait of TRAIT_IDS) {

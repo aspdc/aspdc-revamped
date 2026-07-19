@@ -3,10 +3,15 @@ import { CHARACTER_PROFILES, assignCharacter } from './characters'
 import { emptyTraitVector } from './traits'
 
 describe('assignCharacter', () => {
-    it('defines all 15 character profiles', () => {
-        expect(CHARACTER_PROFILES).toHaveLength(15)
+    it('defines all character profiles without duplicates', () => {
+        expect(CHARACTER_PROFILES).toHaveLength(14)
         const ids = new Set(CHARACTER_PROFILES.map((profile) => profile.id))
-        expect(ids.size).toBe(15)
+        expect(ids.size).toBe(14)
+        expect(ids.has('lalo-salamanca')).toBe(true)
+        expect(ids.has('hector-salamanca')).toBe(true)
+        expect(ids.has('gale-boetticher')).toBe(false)
+        expect(ids.has('the-cousins')).toBe(false)
+        expect(ids.has('don-eladio')).toBe(false)
     })
 
     it('returns exactly three distinct characters sorted by similarity', () => {
