@@ -7,6 +7,8 @@ export type {
 } from './types'
 export { TRAIT_IDS } from './types'
 export { emptyTraitVector, isTraitId, scoreTraits } from './traits'
+export { fetchGitHubSnapshot } from './github'
+export { getGitHubAccessToken } from './github-token'
 export {
     CHARACTER_PROFILES,
     assignCharacter,
