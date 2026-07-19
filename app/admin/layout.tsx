@@ -1,4 +1,5 @@
 import { auth } from '@/lib/auth'
+import { canAccessAdmin } from '@/lib/admin-access'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
@@ -8,12 +9,21 @@ import { Analytics } from '@vercel/analytics/next'
 import { Suspense } from 'react'
 
 async function AdminLayoutContent({ children }: { children: React.ReactNode }) {
+    const requestHeaders = await headers()
     const session = await auth.api.getSession({
-        headers: await headers(),
+        headers: requestHeaders,
     })
 
     if (!session) {
         redirect('/login')
+    }
+
+    const accounts = await auth.api.listUserAccounts({
+        headers: requestHeaders,
+    })
+
+    if (!canAccessAdmin(accounts)) {
+        redirect('/')
     }
 
     const adminLinks = [

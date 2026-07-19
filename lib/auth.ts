@@ -13,5 +13,11 @@ export const auth = betterAuth({
         enabled: true,
         disableSignUp: true, // Disable signup - only allow login with existing credentials
     },
+    socialProviders: {
+        github: {
+            clientId: process.env.GITHUB_CLIENT_ID as string,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+        },
+    },
     plugins: [nextCookies()], // make sure this is the last plugin in the array
 })

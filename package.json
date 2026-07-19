@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "next start",
         "prettier": "pnpm dlx prettier --write .",
+        "test": "node --experimental-strip-types --test lib/**/*.test.ts",
         "prepare": "husky",
         "db:push": "drizzle-kit push",
         "db:generate": "drizzle-kit generate",
@@ -57,7 +58,7 @@
     "devDependencies": {
         "@eslint/eslintrc": "^3.3.5",
         "@tailwindcss/postcss": "^4.2.1",
-        "@types/node": "^25.5.0",
+        "@types/node": "^25.9.5",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@types/sanitize-html": "^2.16.1",
