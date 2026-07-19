@@ -1,27 +1,25 @@
-import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
-import { canAccessAdmin } from './admin-access.ts'
+import { describe, expect, it } from 'vitest'
+import { canAccessAdmin } from './admin-access'
 
 describe('canAccessAdmin', () => {
     it('allows users with a credential account', () => {
-        assert.equal(canAccessAdmin([{ providerId: 'credential' }]), true)
+        expect(canAccessAdmin([{ providerId: 'credential' }])).toBe(true)
     })
 
     it('allows users who have both credential and github accounts', () => {
-        assert.equal(
+        expect(
             canAccessAdmin([
                 { providerId: 'github' },
                 { providerId: 'credential' },
-            ]),
-            true
-        )
+            ])
+        ).toBe(true)
     })
 
     it('denies GitHub OAuth-only users', () => {
-        assert.equal(canAccessAdmin([{ providerId: 'github' }]), false)
+        expect(canAccessAdmin([{ providerId: 'github' }])).toBe(false)
     })
 
     it('denies users with no accounts', () => {
-        assert.equal(canAccessAdmin([]), false)
+        expect(canAccessAdmin([])).toBe(false)
     })
 })
