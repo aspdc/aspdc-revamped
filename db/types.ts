@@ -140,3 +140,28 @@ export type TournamentLeaderboardEntry = {
     scores: { contest: TournamentContest; points: number }[]
     totalPoints: number
 }
+
+export type LabProfile = {
+    id: string
+    userId: string
+    githubUsername: string
+    characterId: string
+    characterSimilarity: number
+    developerScore: number
+    traitScores: Record<string, number>
+    githubSnapshot: Record<string, unknown>
+    analyzedAt: Date
+}
+
+export type LabAchievement = {
+    id: string
+    profileId: string
+    achievementId: string
+    unlockedAt: Date
+}
+
+export type NewLabProfile = Omit<LabProfile, 'id'>
+export type NewLabAchievement = {
+    achievementId: string
+    unlockedAt?: Date
+}
