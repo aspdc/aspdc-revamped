@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { authClient } from '@/lib/auth-client'
 import {
     getCharacterImageUrl,
     type CharacterProfile,
@@ -16,7 +17,7 @@ type CharacterHeroProps = {
     similarity: number
     developerScore: number
     explanation: string
-    isOwner: boolean
+    profileUserId?: string
 }
 
 export function CharacterHero({
@@ -25,8 +26,12 @@ export function CharacterHero({
     similarity,
     developerScore,
     explanation,
-    isOwner,
+    profileUserId,
 }: CharacterHeroProps) {
+    const { data: session } = authClient.useSession()
+    const isOwner = Boolean(
+        session?.user?.id && profileUserId && session.user.id === profileUserId
+    )
     const initialImgSrc = character.image || getCharacterImageUrl(character.id)
     const [imgSrc, setImgSrc] = useState(initialImgSrc)
 

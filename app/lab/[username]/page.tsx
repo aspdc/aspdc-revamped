@@ -1,11 +1,9 @@
 import { Suspense } from 'react'
-import { headers } from 'next/headers'
 import {
     fetchLabAchievementsByProfileId,
     fetchLabProfileByGithubUsername,
     fetchLabProfilesByScore,
 } from '@/db/queries'
-import { auth } from '@/lib/auth'
 import { getProfileDisplayData } from '@/lib/lab/profile'
 import { CharacterHero } from '@/components/lab/character-hero'
 import { TopMatches } from '@/components/lab/top-matches'
@@ -70,19 +68,6 @@ async function ProfileContent({
         return <NotFoundDossier username={username} />
     }
 
-    let session = null
-    try {
-        session = await auth.api.getSession({
-            headers: await headers(),
-        })
-    } catch {
-        session = null
-    }
-
-    const isOwner = Boolean(
-        session?.user?.id && session.user.id === profile.userId
-    )
-
     const [dbAchievementIds, allProfiles] = await Promise.all([
         fetchLabAchievementsByProfileId(profile.id),
         fetchLabProfilesByScore(),
@@ -103,7 +88,7 @@ async function ProfileContent({
                 similarity={profile.characterSimilarity}
                 developerScore={profile.developerScore}
                 explanation={primaryExplanation}
-                isOwner={isOwner}
+                profileUserId={profile.userId}
             />
 
             {/* Section 2: Top 3 Character Matches */}

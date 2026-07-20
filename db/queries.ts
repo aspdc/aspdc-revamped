@@ -29,7 +29,7 @@ import {
     TournamentScore,
     UpcomingEvent,
 } from '@/db/types'
-import { asc, desc, eq, sql } from 'drizzle-orm'
+import { asc, desc, eq, ilike, sql } from 'drizzle-orm'
 
 // ----------------- Achievements -----------------
 export async function fetchAchievements(): Promise<Achievement[]> {
@@ -259,7 +259,12 @@ export async function fetchLabProfileByGithubUsername(
         const rows = await db
             .select()
             .from(labProfiles)
-            .where(eq(labProfiles.githubUsername, githubUsername))
+            .where(
+                eq(
+                    sql`LOWER(${labProfiles.githubUsername})`,
+                    githubUsername.toLowerCase()
+                )
+            )
             .limit(1)
         return rows[0] ? mapLabProfile(rows[0]) : null
     } catch (error) {

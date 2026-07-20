@@ -132,7 +132,7 @@ function LeaderboardRow({
             </TableCell>
 
             {/* Archetype */}
-            <TableCell font-mono text-xs font-semibold text-primary>
+            <TableCell className="text-primary font-mono text-xs font-semibold">
                 <span>{entry.characterName}</span>
             </TableCell>
 

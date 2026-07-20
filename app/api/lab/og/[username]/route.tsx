@@ -5,7 +5,8 @@ import { CHARACTER_PROFILES } from '@/lib/lab/characters'
 async function loadSpaceGroteskFont(): Promise<ArrayBuffer | null> {
     try {
         const response = await fetch(
-            'https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf'
+            'https://cdn.jsdelivr.net/fontsource/fonts/space-grotesk@latest/latin-700-normal.ttf',
+            { next: { revalidate: 86400 } }
         )
         if (response.ok) {
             return await response.arrayBuffer()
@@ -48,13 +49,11 @@ export async function GET(
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 alignItems: 'stretch',
-                backgroundColor: '#030f07',
-                backgroundImage:
-                    'radial-gradient(ellipse at top, #092e17 0%, #030f07 70%)',
+                backgroundColor: '#09090b',
                 padding: '48px',
                 fontFamily: fontData ? 'Space Grotesk' : 'sans-serif',
-                color: '#ffffff',
-                border: '4px solid #22c55e',
+                color: '#f4f4f5',
+                border: '4px solid #27272a',
                 boxSizing: 'border-box',
             }}
         >
@@ -64,7 +63,7 @@ export async function GET(
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderBottom: '2px solid rgba(34, 197, 94, 0.3)',
+                    borderBottom: '2px solid #27272a',
                     paddingBottom: '20px',
                 }}
             >
@@ -73,17 +72,17 @@ export async function GET(
                         display: 'flex',
                         alignItems: 'center',
                         gap: '10px',
-                        backgroundColor: 'rgba(34, 197, 94, 0.15)',
-                        border: '1px solid rgba(34, 197, 94, 0.6)',
+                        backgroundColor: '#18181b',
+                        border: '1px solid #27272a',
                         padding: '6px 16px',
-                        borderRadius: '4px',
+                        borderRadius: '6px',
                         color: '#22c55e',
                         fontSize: '18px',
                         fontWeight: 'bold',
-                        letterSpacing: '2px',
+                        letterSpacing: '1px',
                     }}
                 >
-                    CLASSIFIED // LABORATORY DOSSIER
+                    DEVELOPER PROFILE ANALYSIS
                 </div>
 
                 <div
@@ -92,10 +91,10 @@ export async function GET(
                         alignItems: 'center',
                         gap: '8px',
                         fontSize: '20px',
-                        color: '#a7f3d0',
+                        color: '#a1a1aa',
                     }}
                 >
-                    TARGET:{' '}
+                    GITHUB:{' '}
                     <span style={{ color: '#ffffff', fontWeight: 'bold' }}>
                         @{profile.githubUsername}
                     </span>
@@ -117,13 +116,13 @@ export async function GET(
                 <div
                     style={{
                         fontSize: '18px',
-                        letterSpacing: '4px',
-                        color: '#6ee7b7',
+                        letterSpacing: '3px',
+                        color: '#a1a1aa',
                         fontWeight: '600',
                         textTransform: 'uppercase',
                     }}
                 >
-                    PRIMARY PERSONA ALIGNMENT
+                    PRIMARY DEVELOPER ARCHETYPE MATCH
                 </div>
 
                 <div
@@ -133,7 +132,6 @@ export async function GET(
                         color: '#22c55e',
                         lineHeight: 1.1,
                         letterSpacing: '-1px',
-                        textShadow: '0 0 30px rgba(34, 197, 94, 0.5)',
                     }}
                 >
                     {primaryCharacter.name}
@@ -142,7 +140,7 @@ export async function GET(
                 <div
                     style={{
                         fontSize: '20px',
-                        color: '#d1d5db',
+                        color: '#d4d4d8',
                         maxWidth: '900px',
                         lineHeight: 1.4,
                     }}
@@ -150,7 +148,7 @@ export async function GET(
                     {primaryCharacter.summary}
                 </div>
 
-                {/* Stats Pill Strip */}
+                {/* Core Metrics Strip */}
                 <div
                     style={{
                         display: 'flex',
@@ -163,16 +161,16 @@ export async function GET(
                             display: 'flex',
                             alignItems: 'center',
                             gap: '8px',
-                            backgroundColor: 'rgba(34, 197, 94, 0.15)',
-                            border: '1px solid rgba(34, 197, 94, 0.4)',
-                            borderRadius: '30px',
+                            backgroundColor: '#18181b',
+                            border: '1px solid #27272a',
+                            borderRadius: '8px',
                             padding: '10px 24px',
                             fontSize: '20px',
                             fontWeight: 'bold',
                             color: '#22c55e',
                         }}
                     >
-                        Purity Match:{' '}
+                        Archetype Match:{' '}
                         <span style={{ color: '#ffffff' }}>
                             {Math.round(profile.characterSimilarity)}%
                         </span>
@@ -183,16 +181,16 @@ export async function GET(
                             display: 'flex',
                             alignItems: 'center',
                             gap: '8px',
-                            backgroundColor: 'rgba(5, 46, 22, 0.6)',
-                            border: '1px solid rgba(34, 197, 94, 0.25)',
-                            borderRadius: '30px',
+                            backgroundColor: '#18181b',
+                            border: '1px solid #27272a',
+                            borderRadius: '8px',
                             padding: '10px 24px',
                             fontSize: '20px',
                             fontWeight: 'bold',
-                            color: '#e5e7eb',
+                            color: '#ffffff',
                         }}
                     >
-                        Dev Score:{' '}
+                        Developer Score:{' '}
                         <span style={{ color: '#22c55e' }}>
                             {profile.developerScore}
                         </span>
@@ -207,22 +205,22 @@ export async function GET(
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    borderTop: '1px solid rgba(34, 197, 94, 0.2)',
+                    borderTop: '1px solid #27272a',
                     paddingTop: '16px',
                     fontSize: '16px',
-                    color: '#4b5563',
+                    color: '#71717a',
                 }}
             >
                 <div
                     style={{
-                        color: '#10b981',
+                        color: '#22c55e',
                         fontWeight: 'bold',
                         letterSpacing: '1px',
                     }}
                 >
-                    BREAKING DEV // ASPDC LABORATORY ANALYZER
+                    BREAKING DEVS // DEVELOPER LAB
                 </div>
-                <div>STATUS: VERIFIED DOSSIER</div>
+                <div>VERIFIED PROFILE</div>
             </div>
         </div>,
         {
