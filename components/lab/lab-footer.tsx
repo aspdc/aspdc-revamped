@@ -13,7 +13,7 @@ export function LabFooter() {
                         rel="noopener noreferrer"
                         className="text-foreground hover:text-primary font-mono underline"
                     >
-                        ni3rav
+                        nirav
                     </a>{' '}
                     a massive breaking bad fan who used agents to write 100
                     percent of this codebase while i just sat back and took all

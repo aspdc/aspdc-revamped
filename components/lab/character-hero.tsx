@@ -65,6 +65,7 @@ export function CharacterHero({
                                     src={imgSrc}
                                     alt={character.name}
                                     fill
+                                    sizes="(max-width: 640px) 208px, 240px"
                                     className="rounded-lg object-cover"
                                     priority
                                     onError={() =>

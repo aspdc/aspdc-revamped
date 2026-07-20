@@ -16,6 +16,7 @@ function MatchAvatar({ src, alt }: { src: string; alt: string }) {
             src={imgSrc}
             alt={alt}
             fill
+            sizes="56px"
             className="object-cover"
             onError={() => setImgSrc('/placeholder.svg')}
         />
