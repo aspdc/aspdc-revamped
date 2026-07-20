@@ -6,6 +6,8 @@ import {
     achievements,
     blogs,
     events,
+    labAchievements,
+    labProfiles,
     leaderboard,
     leaderboardUsers,
     projects,
@@ -19,11 +21,14 @@ import type {
     Achievement,
     Blog,
     Event,
+    LabProfile,
     LeaderboardEntry,
     LeaderboardUser,
     NewAchievement,
     NewBlog,
     NewEvent,
+    NewLabAchievement,
+    NewLabProfile,
     NewLeaderboardEntry,
     NewLeaderboardUser,
     NewProject,
@@ -383,6 +388,69 @@ export async function removeVote(projectId: string) {
         }
     } catch (error) {
         console.error('Error in removeVote:', error)
+        throw error
+    }
+}
+
+// ----------------- Lab (Breaking Dev) -----------------
+export async function upsertLabProfile(
+    profile: NewLabProfile
+): Promise<LabProfile> {
+    try {
+        const [row] = await db
+            .insert(labProfiles)
+            .values({
+                ...profile,
+                analyzedAt: normalizeDate(profile.analyzedAt),
+            })
+            .onConflictDoUpdate({
+                target: labProfiles.userId,
+                set: {
+                    githubUsername: profile.githubUsername,
+                    characterId: profile.characterId,
+                    characterSimilarity: profile.characterSimilarity,
+                    developerScore: profile.developerScore,
+                    traitScores: profile.traitScores,
+                    githubSnapshot: profile.githubSnapshot,
+                    analyzedAt: normalizeDate(profile.analyzedAt),
+                },
+            })
+            .returning()
+
+        return {
+            ...row,
+            analyzedAt: new Date(row.analyzedAt),
+        }
+    } catch (error) {
+        console.error('Error in upsertLabProfile:', error)
+        throw error
+    }
+}
+
+export async function replaceLabAchievements(
+    profileId: string,
+    achievementsToUnlock: NewLabAchievement[]
+) {
+    try {
+        await db
+            .delete(labAchievements)
+            .where(eq(labAchievements.profileId, profileId))
+
+        if (achievementsToUnlock.length === 0) {
+            return
+        }
+
+        await db.insert(labAchievements).values(
+            achievementsToUnlock.map((achievement) => ({
+                profileId,
+                achievementId: achievement.achievementId,
+                unlockedAt: achievement.unlockedAt
+                    ? normalizeDate(achievement.unlockedAt)
+                    : undefined,
+            }))
+        )
+    } catch (error) {
+        console.error('Error in replaceLabAchievements:', error)
         throw error
     }
 }
