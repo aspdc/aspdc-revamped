@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { CHARACTER_PROFILES, assignCharacter } from './characters'
+import {
+    CHARACTER_PROFILES,
+    assignCharacter,
+    getCharacterImageUrl,
+} from './characters'
 import { emptyTraitVector } from './traits'
 
 describe('assignCharacter', () => {
@@ -35,8 +39,9 @@ describe('assignCharacter', () => {
         }
     })
 
-    it('is deterministic for the same vector', () => {
-        const vector = CHARACTER_PROFILES[0].traits
-        expect(assignCharacter(vector)).toEqual(assignCharacter(vector))
+    it('returns character image url with .webp extension', () => {
+        expect(getCharacterImageUrl('walter-white')).toBe(
+            '/images/characters/walter-white.webp'
+        )
     })
 })

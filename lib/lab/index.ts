@@ -27,7 +27,13 @@ export {
     type CharacterMatch,
     type CharacterProfile,
 } from './characters'
-export { scoreDeveloper } from './developer-score'
+export {
+    formatLeaderboardEntries,
+    getCharacterName,
+    getGitHubAvatarUrl,
+    type LabLeaderboardEntry,
+} from './leaderboard'
+
 export {
     ACHIEVEMENTS,
     unlockAchievements,

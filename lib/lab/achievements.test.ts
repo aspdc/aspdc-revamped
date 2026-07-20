@@ -42,7 +42,7 @@ describe('unlockAchievements', () => {
         expect(ids).not.toContain('i-am-the-danger')
     })
 
-    it('unlocks Science, Bitch! only with scientist score and enough languages', () => {
+    it('unlocks Science, B***h! only with scientist score and enough languages', () => {
         const multilingual = snapshot({
             repos: ['TypeScript', 'Python', 'Go'].map((language, index) => ({
                 name: `lab-${index}`,

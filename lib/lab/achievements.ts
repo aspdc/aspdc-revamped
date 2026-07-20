@@ -33,28 +33,31 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
     {
         id: 'the-blue-sky',
         name: 'The Blue Sky',
-        description: '99.1% pure Discipline. The crystal of consistency.',
+        description:
+            'High coding discipline and exceptionally consistent commits.',
         icon: 'blue-sky',
         unlock: ({ vector }) => vector.Discipline > 90,
     },
     {
         id: 'say-my-name',
         name: 'Say My Name',
-        description: 'You are in the global top 10. Respect the rank.',
+        description:
+            'Ranked in the global top 10 on the developer leaderboard.',
         icon: 'crown',
         unlock: ({ rank }) => rank !== undefined && rank <= 10,
     },
     {
         id: 'i-am-the-danger',
         name: 'I Am The Danger',
-        description: 'Chaos above 85. You knock.',
+        description:
+            'High code output with frequent major changes and refactors.',
         icon: 'danger',
         unlock: ({ vector }) => vector.Chaos > 85,
     },
     {
         id: 'science-bitch',
-        name: 'Science, Bitch!',
-        description: 'Scientist over 75 with three or more chemical formulae.',
+        name: 'Science, B***h!',
+        description: 'Proficient across 3 or more programming languages.',
         icon: 'flask',
         unlock: ({ vector, snapshot }) =>
             vector.Scientist > 75 && uniqueLanguageCount(snapshot) >= 3,
@@ -62,42 +65,46 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
     {
         id: 'better-call-saul',
         name: 'Better Call Saul',
-        description: 'Communication over 75. You could sell a merge conflict.',
+        description:
+            'High communication score with active pull request discussions.',
         icon: 'gavel',
         unlock: ({ vector }) => vector.Communication > 75,
     },
     {
         id: 'tightened-up',
         name: 'Tightened Up',
-        description: 'Architect over 75 — the operation looks legitimate.',
+        description:
+            'Clean architecture score with well-structured project repositories.',
         icon: 'chicken',
         unlock: ({ vector }) => vector.Architect > 75,
     },
     {
         id: 'no-half-measures',
         name: 'No Half Measures',
-        description: 'Consistency over 75. Half measures are for rookies.',
+        description: 'Steady, uninterrupted daily commit streaks.',
         icon: 'measure',
         unlock: ({ vector }) => vector.Consistency > 75,
     },
     {
         id: 'this-is-not-meth',
         name: 'This Is Not Meth',
-        description: 'Documentation over 75. Label your samples.',
+        description:
+            'Comprehensive documentation across all your public repositories.',
         icon: 'label',
         unlock: ({ vector }) => vector.Documentation > 75,
     },
     {
         id: 'yeah-science',
         name: 'Yeah Science',
-        description: 'Curiosity over 75. Always one more experiment.',
+        description:
+            'High curiosity score with frequent exploration of new technologies.',
         icon: 'spark',
         unlock: ({ vector }) => vector.Curiosity > 75,
     },
     {
         id: 'the-one-who-builds',
         name: 'The One Who Builds',
-        description: 'Builder over 75 with at least five laboratories.',
+        description: 'Maintains 5 or more active original repositories.',
         icon: 'hammer',
         unlock: ({ vector, snapshot }) =>
             vector.Builder > 75 && snapshot.repos.length >= 5,
@@ -105,7 +112,8 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
     {
         id: 'associate-network',
         name: 'Associate Network',
-        description: 'TeamPlayer over 70 with 5+ associates.',
+        description:
+            'Strong collaboration score with 5 or more GitHub followers.',
         icon: 'network',
         unlock: ({ vector, snapshot }) =>
             vector.TeamPlayer > 70 && snapshot.followers >= 5,
@@ -113,14 +121,15 @@ export const ACHIEVEMENTS: AchievementDefinition[] = [
     {
         id: 'open-the-lab',
         name: 'Open The Lab',
-        description: 'OpenSource over 70 — share the formula.',
+        description:
+            'High open-source contribution and public repository sharing.',
         icon: 'unlock',
         unlock: ({ vector }) => vector.OpenSource > 70,
     },
     {
         id: 'empire-business',
         name: 'Empire Business',
-        description: 'Leadership over 75. It is not personal.',
+        description: 'High project leadership and repository management score.',
         icon: 'empire',
         unlock: ({ vector }) => vector.Leadership > 75,
     },

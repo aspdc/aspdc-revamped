@@ -1,93 +1,137 @@
 import { Suspense } from 'react'
-import { notFound } from 'next/navigation'
-import { fetchLabProfileByGithubUsername } from '@/db/queries'
-import { CHARACTER_PROFILES } from '@/lib/lab/characters'
-import Link from 'next/link'
+import {
+    fetchLabAchievementsByProfileId,
+    fetchLabProfileByGithubUsername,
+    fetchLabProfilesByScore,
+} from '@/db/queries'
+import { getProfileDisplayData } from '@/lib/lab/profile'
+import { CharacterHero } from '@/components/lab/character-hero'
+import { TopMatches } from '@/components/lab/top-matches'
+import { TraitRadarChart } from '@/components/lab/trait-radar'
+import { AchievementsGrid } from '@/components/lab/achievements-grid'
+import { GlobalRankingBellCurve } from '@/components/lab/bell-curve'
+import { NotFoundDossier } from '@/components/lab/not-found-dossier'
+import { MetricsExplanation } from '@/components/lab/metrics-explanation'
 
-async function ProfileContent({ username }: { username: string }) {
-    const profile = await fetchLabProfileByGithubUsername(username)
-
-    if (!profile) {
-        notFound()
-    }
-
-    const character = CHARACTER_PROFILES.find(
-        (c) => c.id === profile.characterId
-    )
-
-    return (
-        <div className="mx-auto flex min-h-dvh max-w-2xl flex-col items-center justify-center gap-8 px-6 py-16 text-center">
-            {/* Classified badge */}
-            <div className="border-primary/40 text-primary/60 border-2 px-4 py-1 text-xs font-bold tracking-[0.3em] uppercase">
-                Subject Dossier: @{profile.githubUsername}
-            </div>
-
-            {/* Character match */}
-            <div className="space-y-4">
-                <p className="text-muted-foreground text-sm font-medium tracking-wider uppercase">
-                    Matched Subject
-                </p>
-                <h1 className="text-4xl font-bold tracking-tight text-green-400 sm:text-5xl">
-                    {character?.name || profile.characterId}
-                </h1>
-                <p className="text-muted-foreground mx-auto max-w-md text-sm">
-                    {character?.summary}
-                </p>
-            </div>
-
-            {/* Stats grid */}
-            <div className="grid w-full grid-cols-2 gap-4 rounded-xl border border-green-500/20 bg-green-500/5 p-6">
-                <div className="space-y-1">
-                    <p className="text-muted-foreground text-xs font-medium uppercase">
-                        Developer Score
-                    </p>
-                    <p className="text-foreground text-3xl font-bold tracking-tight">
-                        {profile.developerScore}
-                        <span className="text-muted-foreground text-base">
-                            /100
-                        </span>
-                    </p>
-                </div>
-                <div className="space-y-1">
-                    <p className="text-muted-foreground text-xs font-medium uppercase">
-                        Similarity
-                    </p>
-                    <p className="text-foreground text-3xl font-bold tracking-tight">
-                        {Math.round(profile.characterSimilarity)}%
-                    </p>
-                </div>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-4">
-                <Link
-                    href="/lab/analyze"
-                    className="rounded-lg border border-green-500/30 bg-green-500/10 px-6 py-2.5 text-sm font-semibold text-green-400 transition-colors hover:border-green-500/50 hover:bg-green-500/20"
-                >
-                    Re-analyse Dossier
-                </Link>
-            </div>
-        </div>
-    )
-}
-
-export default async function LabProfilePage({
+export async function generateMetadata({
     params,
 }: {
     params: Promise<{ username: string }>
 }) {
     const { username } = await params
+    const profile = await fetchLabProfileByGithubUsername(username)
+
+    if (!profile) {
+        return {
+            title: `Developer Not Found | Breaking Devs`,
+            description: `No developer profile found for @${username}.`,
+        }
+    }
+
+    const title = `@${profile.githubUsername}'s Developer Profile | Breaking Devs`
+    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${profile.characterId} (${profile.characterSimilarity.toFixed(2)}% match).`
+    const ogImageUrl = `/api/lab/og/${encodeURIComponent(profile.githubUsername)}`
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            images: [
+                {
+                    url: ogImageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: `@${profile.githubUsername}'s Breaking Dev Dossier`,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [ogImageUrl],
+        },
+    }
+}
+
+async function ProfileContent({
+    params,
+}: {
+    params: Promise<{ username: string }>
+}) {
+    const { username } = await params
+    const profile = await fetchLabProfileByGithubUsername(username)
+
+    if (!profile) {
+        return <NotFoundDossier username={username} />
+    }
+
+    const [dbAchievementIds, allProfiles] = await Promise.all([
+        fetchLabAchievementsByProfileId(profile.id),
+        fetchLabProfilesByScore(),
+    ])
+
+    const displayData = getProfileDisplayData(profile, dbAchievementIds)
+
+    const primaryExplanation =
+        displayData.topMatches[0]?.explanation ||
+        displayData.primaryCharacter.summary
+
+    return (
+        <div className="bg-background text-foreground min-h-screen font-sans">
+            {/* Section 1: Character Reveal Hero */}
+            <CharacterHero
+                username={profile.githubUsername}
+                character={displayData.primaryCharacter}
+                similarity={profile.characterSimilarity}
+                developerScore={profile.developerScore}
+                explanation={primaryExplanation}
+                profileUserId={profile.userId}
+            />
+
+            {/* Section 2: Top 3 Character Matches */}
+            <TopMatches matches={displayData.topMatches} />
+
+            {/* Section 3: Trait Radar Chart */}
+            <TraitRadarChart traits={displayData.traits} />
+
+            {/* Section 4: Global Ranking Distribution */}
+            <GlobalRankingBellCurve
+                userScore={profile.developerScore}
+                username={profile.githubUsername}
+                allProfiles={allProfiles}
+            />
+
+            {/* Section 5: Achievements & Badges */}
+            <AchievementsGrid achievements={displayData.achievements} />
+
+            {/* Section 6: Methodology & Metrics Explanation */}
+            <MetricsExplanation />
+        </div>
+    )
+}
+
+export default function LabProfilePage({
+    params,
+}: {
+    params: Promise<{ username: string }>
+}) {
     return (
         <Suspense
             fallback={
-                <div className="flex min-h-dvh items-center justify-center">
-                    <div className="text-muted-foreground text-sm">
-                        Loading dossier...
+                <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-black">
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-green-500 border-t-transparent" />
+                        <p className="font-mono text-xs text-green-400">
+                            DECRYPTING SUBJECT DOSSIER...
+                        </p>
                     </div>
                 </div>
             }
         >
-            <ProfileContent username={username} />
+            <ProfileContent params={params} />
         </Suspense>
     )
 }

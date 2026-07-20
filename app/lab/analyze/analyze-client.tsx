@@ -8,30 +8,12 @@ import { BreakingDevsLogo } from '../breaking-devs-logo'
 import { analyzeLabProfile } from '@/app/lab/actions'
 
 const LOADING_STEPS = [
-    {
-        text: 'Establishing secure connection to the underground...',
-        icon: '🔗',
-    },
-    {
-        text: 'Scanning your laboratories...',
-        icon: '🔬',
-    },
-    {
-        text: 'Analysing chemical formulae...',
-        icon: '⚗️',
-    },
-    {
-        text: 'Profiling your associates...',
-        icon: '🕵️',
-    },
-    {
-        text: 'Cross-referencing with known subjects...',
-        icon: '📋',
-    },
-    {
-        text: 'Compiling your dossier...',
-        icon: '📁',
-    },
+    { text: 'Connecting to GitHub API...' },
+    { text: 'Fetching your repositories and activity...' },
+    { text: 'Scoring commit volume and regularity...' },
+    { text: 'Mapping your 15 coding trait scores...' },
+    { text: 'Matching your traits against developer archetypes...' },
+    { text: 'Building your developer profile...' },
 ] as const
 
 type Phase = 'entry' | 'loading' | 'error'
@@ -47,31 +29,31 @@ export function AnalyzeClient() {
         setCurrentStep(0)
         setErrorMessage('')
 
-        // Start stepping through cosmetic loading steps
-        const stepInterval = setInterval(() => {
-            setCurrentStep((prev) => {
-                if (prev < LOADING_STEPS.length - 1) return prev + 1
-                return prev
-            })
-        }, 2400)
+        const STEP_DURATION_MS = 3000
 
-        try {
-            const result = await analyzeLabProfile()
+        // Start server analysis in parallel
+        const analysisPromise = analyzeLabProfile().catch(() => ({
+            ok: false as const,
+            error: 'unknown' as const,
+            message: 'Analysis failed unexpectedly. Please try again.',
+        }))
 
-            clearInterval(stepInterval)
+        // Step sequentially through all 6 cinematic steps
+        for (let step = 0; step < LOADING_STEPS.length; step++) {
+            setCurrentStep(step)
+            await new Promise((resolve) =>
+                setTimeout(resolve, STEP_DURATION_MS)
+            )
+        }
 
-            if (result.ok) {
-                // Brief pause on the final step before redirecting
-                setCurrentStep(LOADING_STEPS.length - 1)
-                await new Promise((resolve) => setTimeout(resolve, 800))
-                window.location.href = `/lab/${result.profile.githubUsername}`
-            } else {
-                setErrorMessage(result.message)
-                setPhase('error')
-            }
-        } catch {
-            clearInterval(stepInterval)
-            setErrorMessage('Analysis failed unexpectedly. Please try again.')
+        // Wait for server analysis to complete if still running
+        const result = await analysisPromise
+
+        if (result.ok) {
+            await new Promise((resolve) => setTimeout(resolve, 400))
+            window.location.href = `/lab/${result.profile.githubUsername}`
+        } else {
+            setErrorMessage(result.message)
             setPhase('error')
         }
     }, [])
@@ -79,9 +61,7 @@ export function AnalyzeClient() {
     if (isPending) {
         return (
             <div className="flex min-h-dvh items-center justify-center">
-                <div className="text-muted-foreground text-sm">
-                    Loading dossier...
-                </div>
+                <div className="text-muted-foreground text-sm">Loading...</div>
             </div>
         )
     }
@@ -91,8 +71,7 @@ export function AnalyzeClient() {
             <div className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-6 px-4 py-16 text-center">
                 <BreakingDevsLogo animate={false} />
                 <p className="text-muted-foreground text-sm">
-                    You must be signed in with GitHub to access the dossier
-                    analysis.
+                    Sign in with GitHub to analyse your developer profile.
                 </p>
                 <GitHubSignInButton />
             </div>
@@ -146,8 +125,9 @@ function EntryView({ onAnalyze }: { onAnalyze: () => void }) {
                     }}
                     className="text-muted-foreground mx-auto max-w-sm text-sm leading-relaxed"
                 >
-                    Analyse your GitHub activity to calculate your developer
-                    score, coding traits, and matching Breaking Bad character.
+                    Analyse your GitHub activity to see your developer score, 15
+                    coding trait scores, and which developer archetype your
+                    coding style most closely matches.
                 </motion.p>
             </div>
 
@@ -220,14 +200,14 @@ function LoadingView({ currentStep }: { currentStep: number }) {
                     }}
                 />
                 <motion.div
-                    className="text-3xl"
+                    className="text-primary font-mono text-3xl"
                     key={currentStep}
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.5, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                 >
-                    {LOADING_STEPS[currentStep].icon}
+                    {currentStep + 1}
                 </motion.div>
             </div>
 
@@ -240,7 +220,7 @@ function LoadingView({ currentStep }: { currentStep: number }) {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -12 }}
                         transition={{ duration: 0.4 }}
-                        className="text-sm font-medium text-green-400/90"
+                        className="font-mono text-sm font-medium text-green-400/90"
                     >
                         {LOADING_STEPS[currentStep].text}
                     </motion.p>
@@ -300,7 +280,7 @@ function ErrorView({
 
             <div className="space-y-2">
                 <h2 className="text-lg font-semibold text-red-400">
-                    Analysis interrupted
+                    Analysis failed
                 </h2>
                 <p className="text-muted-foreground text-sm">{message}</p>
             </div>
@@ -310,7 +290,7 @@ function ErrorView({
                 onClick={onRetry}
                 className="cursor-pointer rounded-lg border border-green-500/30 bg-green-500/10 px-6 py-3 text-sm font-semibold text-green-400 transition-colors hover:border-green-500/50 hover:bg-green-500/20"
             >
-                Retry analysis
+                Try again
             </button>
         </motion.div>
     )

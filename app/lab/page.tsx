@@ -1,37 +1,57 @@
-'use client'
-
-import { authClient } from '@/lib/auth-client'
-import { GitHubSignInButton } from './github-sign-in-button'
+import { Suspense } from 'react'
+import { fetchLabProfilesByScore } from '@/db/queries'
+import { formatLeaderboardEntries } from '@/lib/lab/leaderboard'
+import { LabLeaderboard } from '@/components/lab/lab-leaderboard'
 import { BreakingDevsLogo } from './breaking-devs-logo'
-import Link from 'next/link'
+import { HeroAnalyzeCta } from './hero-analyze-cta'
 
-export default function LabPage() {
-    const { data: session, isPending } = authClient.useSession()
+export const metadata = {
+    title: 'Leaderboard | Breaking Devs',
+    description:
+        'Public ranked index of analyzed GitHub developer profiles, ordered by developer score.',
+}
+
+async function LeaderboardContent() {
+    const profiles = await fetchLabProfilesByScore()
+    const entries = formatLeaderboardEntries(profiles)
 
     return (
-        <div className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-6 px-4 py-16 text-center">
-            <div className="space-y-4">
-                <BreakingDevsLogo animate={false} />
-                <p className="text-muted-foreground text-sm">
-                    {isPending
-                        ? 'Loading...'
-                        : session
-                          ? `Signed in as ${session.user.name || session.user.email}`
-                          : 'Sign in with GitHub to enter the lab and analyse your developer profile.'}
-                </p>
-            </div>
+        <div className="bg-background text-foreground flex min-h-screen flex-col font-sans">
+            <div className="relative flex flex-1 flex-col items-center px-4 py-12 md:py-20">
+                <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center gap-12">
+                    {/* Hero Card matching /lab/analyze */}
+                    <div className="relative z-10 mx-auto flex max-w-lg flex-col items-center gap-6 text-center">
+                        <BreakingDevsLogo animate={false} />
+                        <div className="bg-border mx-auto h-px w-48" />
+                        <p className="text-muted-foreground mx-auto max-w-sm text-sm leading-relaxed">
+                            Analyze your GitHub activity to calculate your
+                            developer score, coding traits, and matching
+                            Breaking Bad character.
+                        </p>
+                        <HeroAnalyzeCta />
+                    </div>
 
-            {!isPending &&
-                (session ? (
-                    <Link
-                        href="/lab/analyze"
-                        className="rounded-lg border border-green-500/30 bg-green-500/10 px-6 py-3 text-sm font-semibold text-green-400 transition-colors hover:border-green-500/50 hover:bg-green-500/20"
-                    >
-                        Enter the lab
-                    </Link>
-                ) : (
-                    <GitHubSignInButton />
-                ))}
+                    {/* Leaderboard Table */}
+                    <LabLeaderboard entries={entries} />
+                </div>
+            </div>
         </div>
+    )
+}
+
+export default function LabLeaderboardPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="bg-background flex min-h-screen items-center justify-center">
+                    <div className="text-muted-foreground flex flex-col items-center gap-3 font-mono text-xs">
+                        <div className="border-primary h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" />
+                        <p>LOADING DEVELOPER LEADERBOARD...</p>
+                    </div>
+                </div>
+            }
+        >
+            <LeaderboardContent />
+        </Suspense>
     )
 }

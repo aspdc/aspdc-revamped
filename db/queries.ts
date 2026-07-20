@@ -4,6 +4,7 @@ import {
     achievements,
     blogs,
     events,
+    labAchievements,
     labProfiles,
     leaderboard,
     leaderboardUsers,
@@ -28,7 +29,7 @@ import {
     TournamentScore,
     UpcomingEvent,
 } from '@/db/types'
-import { asc, desc, eq, sql } from 'drizzle-orm'
+import { asc, desc, eq, ilike, sql } from 'drizzle-orm'
 
 // ----------------- Achievements -----------------
 export async function fetchAchievements(): Promise<Achievement[]> {
@@ -258,7 +259,12 @@ export async function fetchLabProfileByGithubUsername(
         const rows = await db
             .select()
             .from(labProfiles)
-            .where(eq(labProfiles.githubUsername, githubUsername))
+            .where(
+                eq(
+                    sql`LOWER(${labProfiles.githubUsername})`,
+                    githubUsername.toLowerCase()
+                )
+            )
             .limit(1)
         return rows[0] ? mapLabProfile(rows[0]) : null
     } catch (error) {
@@ -279,6 +285,24 @@ export async function fetchLabProfilesByScore(): Promise<LabProfile[]> {
         return rows.map(mapLabProfile)
     } catch (error) {
         console.error('Error fetching lab profiles by score:', error)
+        return []
+    }
+}
+
+export async function fetchLabAchievementsByProfileId(
+    profileId: string
+): Promise<string[]> {
+    'use cache'
+    cacheLife('minutes')
+
+    try {
+        const rows = await db
+            .select({ achievementId: labAchievements.achievementId })
+            .from(labAchievements)
+            .where(eq(labAchievements.profileId, profileId))
+        return rows.map((row) => row.achievementId)
+    } catch (error) {
+        console.error('Error fetching lab achievements by profileId:', error)
         return []
     }
 }

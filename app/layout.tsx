@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk } from 'next/font/google'
+import { Space_Grotesk, Geist_Mono } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
-    variable: '--font-space-grotesk',
+    variable: '--font-sans',
+    subsets: ['latin'],
+})
+
+const geistMono = Geist_Mono({
+    variable: '--font-mono',
     subsets: ['latin'],
 })
 
@@ -24,7 +29,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${spaceGrotesk.className} overflow-x-hidden antialiased select-none`}
+                className={`${spaceGrotesk.variable} ${geistMono.variable} overflow-x-hidden font-sans antialiased select-none`}
             >
                 <Toaster richColors position="top-right" />
                 {children}
