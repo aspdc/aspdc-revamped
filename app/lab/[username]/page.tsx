@@ -29,9 +29,31 @@ export async function generateMetadata({
         }
     }
 
+    const title = `@${profile.githubUsername}'s Dossier | Breaking Devs`
+    const description = `Subject @${profile.githubUsername} laboratory dossier. Persona match: ${profile.characterId} (${Math.round(profile.characterSimilarity)}% purity).`
+    const ogImageUrl = `/api/lab/og/${encodeURIComponent(profile.githubUsername)}`
+
     return {
-        title: `@${profile.githubUsername}'s Dossier | Breaking Devs`,
-        description: `Subject @${profile.githubUsername} laboratory dossier. Persona match: ${profile.characterId} (${Math.round(profile.characterSimilarity)}% purity).`,
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            images: [
+                {
+                    url: ogImageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: `@${profile.githubUsername}'s Breaking Dev Dossier`,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [ogImageUrl],
+        },
     }
 }
 
@@ -47,9 +69,14 @@ async function ProfileContent({
         return <NotFoundDossier username={username} />
     }
 
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    })
+    let session = null
+    try {
+        session = await auth.api.getSession({
+            headers: await headers(),
+        })
+    } catch {
+        session = null
+    }
 
     const isOwner = Boolean(
         session?.user?.id && session.user.id === profile.userId

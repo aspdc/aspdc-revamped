@@ -42,12 +42,14 @@ export function NotFoundDossier({ username }: { username: string }) {
                     <div className="flex flex-col items-center justify-center gap-3 pt-2 sm:flex-row">
                         <Link
                             href="/lab/analyze"
+                            prefetch={false}
                             className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#22c55e] bg-[#22c55e] px-6 py-2.5 text-sm font-bold text-black shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all hover:bg-[#16a34a] sm:w-auto"
                         >
                             <span>Analyse A Profile</span>
                         </Link>
                         <Link
                             href="/lab"
+                            prefetch={false}
                             className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-700 bg-gray-900/60 px-5 py-2.5 text-sm font-medium text-gray-300 transition-all hover:border-gray-500 hover:text-white sm:w-auto"
                         >
                             <ArrowLeft className="h-4 w-4" />

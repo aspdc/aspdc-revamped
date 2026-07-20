@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Crown, Sparkles } from 'lucide-react'
-import type { CharacterMatch } from '@/lib/lab/characters'
+import { getCharacterImageUrl, type CharacterMatch } from '@/lib/lab/characters'
 
 type TopMatchesProps = {
     matches: CharacterMatch[]
@@ -56,6 +57,8 @@ export function TopMatches({ matches }: TopMatchesProps) {
             >
                 {topThree.map((match, index) => {
                     const isPrimary = index === 0
+                    const matchImg =
+                        match.image || getCharacterImageUrl(match.id)
 
                     return (
                         <motion.div
@@ -81,16 +84,33 @@ export function TopMatches({ matches }: TopMatchesProps) {
                                     )}
                                 </div>
 
-                                {/* Character Name */}
-                                <h3
-                                    className={`mb-3 text-2xl font-extrabold tracking-tight ${
-                                        isPrimary
-                                            ? 'text-[#22c55e]'
-                                            : 'text-white'
-                                    }`}
-                                >
-                                    {match.name}
-                                </h3>
+                                {/* Character Avatar Thumbnail + Name */}
+                                <div className="mb-4 flex items-center gap-3">
+                                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-green-500/30 bg-green-950/50">
+                                        <Image
+                                            src={matchImg}
+                                            alt={match.name}
+                                            fill
+                                            className="object-cover"
+                                            onError={(e) => {
+                                                const target =
+                                                    e.target as HTMLImageElement
+                                                target.srcset =
+                                                    '/placeholder.svg'
+                                                target.src = '/placeholder.svg'
+                                            }}
+                                        />
+                                    </div>
+                                    <h3
+                                        className={`text-xl font-extrabold tracking-tight ${
+                                            isPrimary
+                                                ? 'text-[#22c55e]'
+                                                : 'text-white'
+                                        }`}
+                                    >
+                                        {match.name}
+                                    </h3>
+                                </div>
 
                                 {/* Similarity Fill Bar */}
                                 <div className="mb-4 space-y-1.5">

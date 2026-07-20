@@ -22,6 +22,11 @@ export type CharacterProfile = {
     name: string
     traits: TraitVector
     summary: string
+    image?: string
+}
+
+export function getCharacterImageUrl(id: CharacterId): string {
+    return `/images/characters/${id}.svg`
 }
 
 export type CharacterMatch = {
@@ -29,6 +34,7 @@ export type CharacterMatch = {
     name: string
     similarity: number
     explanation: string
+    image?: string
 }
 
 function traits(partial: Partial<Record<TraitId, number>>): TraitVector {
@@ -396,6 +402,7 @@ export function assignCharacter(vector: TraitVector): CharacterMatch[] {
             name: profile.name,
             similarity,
             explanation: explanationFor(profile, similarity),
+            image: getCharacterImageUrl(profile.id),
         }
     })
         .sort((left, right) => {
