@@ -47,31 +47,31 @@ export function AnalyzeClient() {
         setCurrentStep(0)
         setErrorMessage('')
 
-        // Start stepping through cosmetic loading steps
-        const stepInterval = setInterval(() => {
-            setCurrentStep((prev) => {
-                if (prev < LOADING_STEPS.length - 1) return prev + 1
-                return prev
-            })
-        }, 2400)
+        const STEP_DURATION_MS = 3000
 
-        try {
-            const result = await analyzeLabProfile()
+        // Start server analysis in parallel
+        const analysisPromise = analyzeLabProfile().catch(() => ({
+            ok: false as const,
+            error: 'unknown' as const,
+            message: 'Analysis failed unexpectedly. Please try again.',
+        }))
 
-            clearInterval(stepInterval)
+        // Step sequentially through all 6 cinematic steps
+        for (let step = 0; step < LOADING_STEPS.length; step++) {
+            setCurrentStep(step)
+            await new Promise((resolve) =>
+                setTimeout(resolve, STEP_DURATION_MS)
+            )
+        }
 
-            if (result.ok) {
-                // Brief pause on the final step before redirecting
-                setCurrentStep(LOADING_STEPS.length - 1)
-                await new Promise((resolve) => setTimeout(resolve, 800))
-                window.location.href = `/lab/${result.profile.githubUsername}`
-            } else {
-                setErrorMessage(result.message)
-                setPhase('error')
-            }
-        } catch {
-            clearInterval(stepInterval)
-            setErrorMessage('Analysis failed unexpectedly. Please try again.')
+        // Wait for server analysis to complete if still running
+        const result = await analysisPromise
+
+        if (result.ok) {
+            await new Promise((resolve) => setTimeout(resolve, 400))
+            window.location.href = `/lab/${result.profile.githubUsername}`
+        } else {
+            setErrorMessage(result.message)
             setPhase('error')
         }
     }, [])
