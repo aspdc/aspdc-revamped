@@ -29,7 +29,7 @@ export async function generateMetadata({
     }
 
     const title = `@${profile.githubUsername}'s Developer Profile | Breaking Devs`
-    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${profile.characterId} (${Math.round(profile.characterSimilarity)}% match).`
+    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${profile.characterId} (${profile.characterSimilarity.toFixed(2)}% match).`
     const ogImageUrl = `/api/lab/og/${encodeURIComponent(profile.githubUsername)}`
 
     return {
@@ -97,18 +97,18 @@ async function ProfileContent({
             {/* Section 3: Trait Radar Chart */}
             <TraitRadarChart traits={displayData.traits} />
 
-            {/* Section 4: Methodology & Metrics Explanation */}
-            <MetricsExplanation />
-
-            {/* Section 5: Achievements Grid */}
-            <AchievementsGrid achievements={displayData.achievements} />
-
-            {/* Section 6: Global Ranking Bell Curve */}
+            {/* Section 4: Global Ranking Distribution */}
             <GlobalRankingBellCurve
                 userScore={profile.developerScore}
                 username={profile.githubUsername}
                 allProfiles={allProfiles}
             />
+
+            {/* Section 5: Achievements & Badges */}
+            <AchievementsGrid achievements={displayData.achievements} />
+
+            {/* Section 6: Methodology & Metrics Explanation */}
+            <MetricsExplanation />
         </div>
     )
 }

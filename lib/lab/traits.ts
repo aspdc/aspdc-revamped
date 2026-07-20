@@ -281,24 +281,63 @@ export function isTraitId(value: string): value is TraitId {
     return (TRAIT_IDS as readonly string[]).includes(value)
 }
 
-export const BREAKING_BAD_TRAIT_NAMES: Record<TraitId, string> = {
-    Builder: 'Batch Output',
-    Architect: 'Lab Blueprint',
-    Scientist: 'Chemistry',
-    Explorer: 'Territory',
-    TeamPlayer: 'Syndicate',
-    Mentor: 'Master Cook',
-    Leadership: 'Empire',
-    Consistency: 'Batch Quality',
-    Discipline: 'Purity',
-    Curiosity: 'Reactivity',
-    Creativity: 'Formula R&D',
-    Documentation: 'Cook Notes',
-    OpenSource: 'Distribution',
-    Communication: 'Dispatches',
-    Chaos: 'Volatility',
+export const TRAIT_LABELS: Record<TraitId, string> = {
+    Builder: 'Builder',
+    Architect: 'Architect',
+    Scientist: 'Scientist',
+    Explorer: 'Explorer',
+    TeamPlayer: 'Team Player',
+    Mentor: 'Mentor',
+    Leadership: 'Leadership',
+    Consistency: 'Consistency',
+    Discipline: 'Discipline',
+    Curiosity: 'Curiosity',
+    Creativity: 'Creativity',
+    Documentation: 'Documentation',
+    OpenSource: 'Open Source',
+    Communication: 'Communication',
+    Chaos: 'Chaos',
+}
+
+/**
+ * Plain-English explanation of what each trait measures and what a high score means.
+ * Used in the UI to help readers understand their profile.
+ */
+export const TRAIT_DESCRIPTIONS: Record<TraitId, string> = {
+    Builder:
+        'How much code you ship. Measures how many original repos you own and how frequently you push commits. A high score means you spend most of your time creating new things rather than maintaining or forking others.',
+    Architect:
+        'How well you design and document projects. Looks at whether your repos have descriptions, relevant tags, and READMEs. A high score means people landing on your profile can immediately understand what your projects do.',
+    Scientist:
+        'How many programming languages you use. A high score means you regularly work across multiple languages — not just one stack — which signals broad technical range.',
+    Explorer:
+        'How broadly you range across topics. Combines language variety with the number of topic tags on your repos. A high score means you dip into many different problem domains rather than staying in one lane.',
+    TeamPlayer:
+        "How actively you collaborate. Counts pull requests, PR reviews, and your GitHub follow network. A high score means you actively participate in others' projects, not just your own.",
+    Mentor: 'How much you follow and engage with others. Measures who you follow and how often you leave comments. A high score means you are actively guiding or encouraging other developers.',
+    Leadership:
+        'How much influence you have on GitHub. Looks at your follower count relative to who you follow. A high score means many developers look to you — not the other way around.',
+    Consistency:
+        'How evenly spaced your commits are over time. A high score means you code regularly across the week, rather than in intense bursts followed by long silences.',
+    Discipline:
+        'How reliably active you are over the 90-day window. Combines consistency with active days and push volume. A high score means you show up to code day after day.',
+    Curiosity:
+        'How much you explore new territory. Combines language diversity with repo topics and overall event activity. A high score means you are always trying something new.',
+    Creativity:
+        'How unique your project ideas are. Measures language variety plus the originality of your repo names. A high score means your projects are distinctive — not cookie-cutter.',
+    Documentation:
+        'How thoroughly you document your work. Primarily driven by how many of your repos have descriptions. A high score means someone can understand your project without reading your code.',
+    OpenSource:
+        'How publicly engaged you are. Looks at your follower and following network alongside original repo count. A high score means you are a visible, sharing member of the open-source ecosystem.',
+    Communication:
+        'How clearly you communicate with the community. Combines follower reach with issue comments and commit comments. A high score means you actively discuss, review, and respond — not just code in silence.',
+    Chaos: 'How unpredictable your activity patterns are. A high score means your commit schedule is erratic and your project mix is broad and inconsistent — this is not necessarily bad; many prolific experimenters score high here.',
 }
 
 export function getTraitLabel(traitId: TraitId): string {
-    return BREAKING_BAD_TRAIT_NAMES[traitId] ?? traitId
+    return TRAIT_LABELS[traitId] ?? traitId
+}
+
+export function getTraitDescription(traitId: TraitId): string {
+    return TRAIT_DESCRIPTIONS[traitId] ?? ''
 }

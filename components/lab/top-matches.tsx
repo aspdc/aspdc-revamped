@@ -25,19 +25,20 @@ function MatchAvatar({ src, alt }: { src: string; alt: string }) {
 export function TopMatches({ matches }: TopMatchesProps) {
     return (
         <section className="bg-background text-foreground relative w-full px-4 py-12 font-sans">
-            <div className="mx-auto flex w-full max-w-6xl flex-col items-center">
+            <div className="mx-auto flex w-full max-w-4xl flex-col items-center">
                 {/* Section Header */}
                 <div className="mb-2 text-center">
-                    <span className="text-muted-foreground font-mono text-xs uppercase">
-                        DEVELOPER PERSONA ALIGNMENT
+                    <span className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                        Developer Persona Alignment
                     </span>
-                    <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
+                    <h2 className="text-foreground mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">
                         Top 3 Developer Archetype Matches
                     </h2>
-                    <p className="text-muted-foreground mt-1 max-w-xl text-center font-mono text-xs sm:text-sm">
-                        Calculated by comparing your coding speed, refactoring
-                        frequency, and repo complexity against standard
-                        developer personas.
+                    <p className="text-muted-foreground mx-auto mt-2 max-w-xl text-base leading-relaxed">
+                        Ranked by how closely your 15 coding traits match each
+                        developer archetype. The percentage is a cosine
+                        similarity score — higher means your coding style is
+                        more like that archetype.
                     </p>
                 </div>
 
@@ -61,11 +62,11 @@ export function TopMatches({ matches }: TopMatchesProps) {
                             >
                                 <div>
                                     {/* Top Rank Header */}
-                                    <div className="text-muted-foreground mb-4 flex items-center justify-between font-mono text-xs">
-                                        <span>MATCH #{idx + 1}</span>
+                                    <div className="text-muted-foreground mb-4 flex items-center justify-between font-mono text-xs tracking-widest uppercase">
+                                        <span>Match #{idx + 1}</span>
                                         {isPrimary && (
                                             <span className="text-primary font-bold">
-                                                PRIMARY MATCH
+                                                Primary Match
                                             </span>
                                         )}
                                     </div>
@@ -89,16 +90,16 @@ export function TopMatches({ matches }: TopMatchesProps) {
                                     </div>
 
                                     {/* Similarity Bar */}
-                                    <div className="mb-4 space-y-1.5 font-mono text-xs">
-                                        <div className="text-muted-foreground flex items-center justify-between">
-                                            <span>SIMILARITY RATING</span>
+                                    <div className="mb-4 space-y-1.5">
+                                        <div className="text-muted-foreground flex items-center justify-between font-mono text-xs tracking-widest uppercase">
+                                            <span>Similarity</span>
                                             <span className="text-foreground font-bold">
-                                                {Math.round(match.similarity)}%
+                                                {match.similarity.toFixed(2)}%
                                             </span>
                                         </div>
                                         <div className="bg-muted h-2 w-full overflow-hidden rounded-full">
                                             <div
-                                                className="bg-primary h-full rounded-full"
+                                                className="bg-primary h-full rounded-full transition-all"
                                                 style={{
                                                     width: `${Math.min(100, Math.max(0, match.similarity))}%`,
                                                 }}
@@ -107,7 +108,7 @@ export function TopMatches({ matches }: TopMatchesProps) {
                                     </div>
 
                                     {/* Layman Explanation */}
-                                    <p className="text-muted-foreground text-xs leading-relaxed">
+                                    <p className="text-muted-foreground text-base leading-relaxed">
                                         {match.explanation}
                                     </p>
                                 </div>

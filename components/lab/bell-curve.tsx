@@ -40,68 +40,70 @@ export function GlobalRankingBellCurve({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mx-auto flex w-full max-w-6xl flex-col items-center"
+                className="mx-auto flex w-full max-w-4xl flex-col items-center"
             >
                 {/* Section Header */}
                 <div className="mb-2 text-center">
-                    <span className="text-muted-foreground font-mono text-xs uppercase">
-                        GLOBAL DEVELOPER COMPARISON
+                    <span className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                        Global Developer Comparison
                     </span>
-                    <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
-                        Developer Score Distribution
+                    <h2 className="text-foreground mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">
+                        Where You Rank Globally
                     </h2>
-                    <p className="text-muted-foreground mt-1 max-w-xl text-center font-mono text-xs sm:text-sm">
-                        Shows where @{username}&apos;s score of {userScore}{' '}
-                        places them relative to all analyzed developers.
+                    <p className="text-muted-foreground mx-auto mt-2 max-w-xl text-sm leading-relaxed">
+                        Your Developer Score of{' '}
+                        <strong className="text-foreground">{userScore}</strong>{' '}
+                        plotted against all other developers who have run
+                        analysis. The curve shows the distribution.
                     </p>
                 </div>
 
                 {/* Stat Callouts Grid */}
                 <div className="mt-8 grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
                     <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
-                        <div className="text-muted-foreground font-mono text-xs">
-                            PERCENTILE
+                        <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                            Percentile
                         </div>
                         <div className="text-primary mt-1 font-mono text-2xl font-extrabold">
                             Top {100 - stats.percentile}%
                         </div>
-                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                        <div className="text-muted-foreground mt-1 text-sm">
                             Higher than {stats.percentile}% of developers
                         </div>
                     </div>
 
                     <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
-                        <div className="text-muted-foreground font-mono text-xs">
-                            GLOBAL RANK
+                        <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                            Global Rank
                         </div>
                         <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             #{stats.rank}
                         </div>
-                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
-                            Out of {stats.totalSubjects} developers analyzed
+                        <div className="text-muted-foreground mt-1 text-sm">
+                            Out of {stats.totalSubjects} developers
                         </div>
                     </div>
 
                     <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
-                        <div className="text-muted-foreground font-mono text-xs">
-                            HIGHER SCORES
+                        <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                            Above You
                         </div>
                         <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             {stats.usersAbove}
                         </div>
-                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                        <div className="text-muted-foreground mt-1 text-sm">
                             Developers with a higher score
                         </div>
                     </div>
 
                     <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
-                        <div className="text-muted-foreground font-mono text-xs">
-                            LOWER SCORES
+                        <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                            Below You
                         </div>
                         <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             {stats.usersBelow}
                         </div>
-                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                        <div className="text-muted-foreground mt-1 text-sm">
                             Developers with a lower score
                         </div>
                     </div>
@@ -109,13 +111,13 @@ export function GlobalRankingBellCurve({
 
                 {/* Bell Curve Chart Container */}
                 <div className="border-border bg-card relative mt-6 w-full rounded-xl border p-6 shadow-md sm:p-8">
-                    <div className="border-border mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3 font-mono text-xs">
-                        <span className="text-foreground font-bold uppercase">
-                            DEVELOPER SCORE BELL CURVE
+                    <div className="border-border mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3">
+                        <span className="text-foreground font-semibold">
+                            Score Distribution
                         </span>
-                        <div className="text-muted-foreground">
-                            Score:{' '}
-                            <span className="text-primary font-bold">
+                        <div className="text-muted-foreground text-sm">
+                            Your score:{' '}
+                            <span className="text-primary font-mono font-bold">
                                 {userScore} / 100
                             </span>
                         </div>
@@ -210,15 +212,16 @@ export function GlobalRankingBellCurve({
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="border-border bg-muted/40 text-muted-foreground mt-4 space-y-1 rounded-lg border p-4 font-sans text-xs leading-relaxed">
-                        <div className="text-foreground font-mono text-xs font-bold">
-                            HOW RANKINGS ARE CALCULATED:
-                        </div>
-                        <p>
-                            Your developer score is calculated from repository
-                            activity, commit regularity, code variety, and pull
-                            request involvement. The curve represents the
-                            overall distribution of all developers index.
+                    <div className="border-border bg-muted/40 mt-4 rounded-lg border p-4 text-sm leading-relaxed">
+                        <p className="text-foreground mb-1 font-semibold">
+                            How rankings are calculated
+                        </p>
+                        <p className="text-muted-foreground">
+                            Your developer score is calculated from commit
+                            volume (35%), repo quality and documentation (35%),
+                            and how consistently you push code over the 90-day
+                            window (30%). The curve shows where the full
+                            population of analysed developers falls.
                         </p>
                     </div>
                 </div>

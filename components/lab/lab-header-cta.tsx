@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FlaskConical, ArrowRight, UserCheck } from 'lucide-react'
+import { Sparkles, ArrowRight } from 'lucide-react'
 
 type LabHeaderCtaProps = {
     isSignedIn?: boolean
@@ -9,32 +9,31 @@ type LabHeaderCtaProps = {
 
 export function LabHeaderCta({ isSignedIn = false }: LabHeaderCtaProps) {
     return (
-        <header className="sticky top-0 z-40 w-full border-b border-green-500/20 bg-black/85 px-4 py-3 backdrop-blur-md transition-all">
-            <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 font-[family-name:var(--font-space-grotesk)]">
-                {/* Left: Quick title/tag */}
+        <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-black/80 px-4 py-3.5 backdrop-blur-md transition-all">
+            <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 font-sans">
+                {/* Left: Branding */}
                 <Link
                     href="/lab"
-                    className="flex items-center gap-2 font-mono text-xs tracking-wider text-gray-300 transition-colors hover:text-green-400"
+                    prefetch={false}
+                    className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
                 >
-                    <span className="relative flex h-2 w-2">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                        <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-                    </span>
-                    <span className="font-bold text-green-400">LAB</span>
-                    <span className="text-gray-600">//</span>
-                    <span className="hidden text-gray-400 sm:inline">
-                        LEADERBOARD INDEX
+                    <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-[#22c55e]/40 bg-[#22c55e]/15 font-mono text-xs font-bold text-[#22c55e]">
+                        Br
+                    </div>
+                    <span className="text-base font-extrabold tracking-tight text-white">
+                        Breaking<span className="text-[#22c55e]">Devs</span>
                     </span>
                 </Link>
 
                 {/* Right: CTA button */}
                 <Link
                     href="/lab/analyze"
-                    className="group inline-flex items-center gap-2 rounded-lg border border-green-500/40 bg-green-500/10 px-3.5 py-1.5 font-mono text-xs font-bold text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.15)] transition-all hover:border-green-500/70 hover:bg-green-500/20 hover:text-green-300 sm:px-4 sm:py-2 sm:text-sm"
+                    prefetch={false}
+                    className="group inline-flex items-center gap-2 rounded-full border border-[#22c55e] bg-[#22c55e] px-4 py-1.5 font-mono text-xs font-bold text-black shadow-[0_0_15px_rgba(34,197,94,0.25)] transition-all hover:scale-105 hover:bg-[#16a34a]"
                 >
-                    <FlaskConical className="h-4 w-4 text-green-400" />
+                    <Sparkles className="h-3.5 w-3.5" />
                     <span>
-                        {isSignedIn ? 'Run Analysis' : 'Analyse Your Profile'}
+                        {isSignedIn ? 'Run Analysis' : 'Analyse Profile'}
                     </span>
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 </Link>

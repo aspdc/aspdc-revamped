@@ -172,7 +172,7 @@ export async function GET(
                     >
                         Archetype Match:{' '}
                         <span style={{ color: '#ffffff' }}>
-                            {Math.round(profile.characterSimilarity)}%
+                            {profile.characterSimilarity.toFixed(2)}%
                         </span>
                     </div>
 

@@ -46,10 +46,10 @@ export function CharacterHero({
                 {/* Main Card */}
                 <div className="border-border bg-card w-full rounded-xl border p-6 shadow-xl md:p-10">
                     {/* Header Info */}
-                    <div className="border-border text-muted-foreground mb-8 flex flex-wrap items-center justify-between gap-3 border-b pb-4 font-mono text-xs">
-                        <div>DEVELOPER PROFILE ANALYSIS</div>
+                    <div className="border-border text-muted-foreground mb-8 flex flex-wrap items-center justify-between gap-3 border-b pb-4 font-mono text-xs tracking-widest uppercase">
+                        <div>Developer Profile Analysis</div>
                         <div>
-                            GITHUB HANDLER:{' '}
+                            GitHub:{' '}
                             <span className="text-foreground font-bold">
                                 @{username}
                             </span>
@@ -92,43 +92,45 @@ export function CharacterHero({
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Match Similarity */}
                                 <div className="border-border bg-background/50 rounded-lg border p-4">
-                                    <div className="text-muted-foreground font-mono text-xs">
-                                        ARCHETYPE MATCH
+                                    <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                                        Archetype Match
                                     </div>
                                     <div className="text-primary mt-1 font-mono text-3xl font-extrabold">
-                                        {Math.round(similarity)}%
+                                        {similarity.toFixed(2)}%
                                     </div>
-                                    <p className="text-muted-foreground mt-1 text-xs leading-normal">
-                                        How closely your commit patterns match
-                                        this persona.
+                                    <p className="text-muted-foreground mt-1 text-base leading-normal">
+                                        How closely your commit patterns and
+                                        trait scores align with this persona.
                                     </p>
                                 </div>
 
                                 {/* Developer Score */}
                                 <div className="border-border bg-background/50 rounded-lg border p-4">
-                                    <div className="text-muted-foreground font-mono text-xs">
-                                        DEVELOPER SCORE
+                                    <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+                                        Developer Score
                                     </div>
                                     <div className="text-foreground mt-1 font-mono text-3xl font-extrabold">
                                         {developerScore}
-                                        <span className="text-muted-foreground text-xs font-normal">
+                                        <span className="text-muted-foreground text-sm font-normal">
                                             {' '}
                                             / 100
                                         </span>
                                     </div>
-                                    <p className="text-muted-foreground mt-1 text-xs leading-normal">
-                                        Rating based on commit volume,
-                                        consistency, and repo impact.
+                                    <p className="text-muted-foreground mt-1 text-base leading-normal">
+                                        Composite score across commit volume,
+                                        repo quality, and commit discipline.
                                     </p>
                                 </div>
                             </div>
 
                             {/* Plain English Explanation */}
-                            <div className="border-border bg-muted/40 text-muted-foreground space-y-1 rounded-lg border p-4 text-xs leading-relaxed">
-                                <div className="text-foreground font-mono font-bold">
-                                    WHY YOU MATCHED THIS PERSONA:
+                            <div className="border-border bg-muted/40 space-y-1 rounded-lg border p-4 text-base leading-relaxed">
+                                <div className="text-foreground font-semibold">
+                                    Why you matched this persona:
                                 </div>
-                                <p>{explanation || character.summary}</p>
+                                <p className="text-muted-foreground">
+                                    {explanation || character.summary}
+                                </p>
                             </div>
                         </div>
                     </div>
