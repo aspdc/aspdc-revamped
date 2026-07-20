@@ -13,6 +13,7 @@ import { TraitRadarChart } from '@/components/lab/trait-radar'
 import { AchievementsGrid } from '@/components/lab/achievements-grid'
 import { GlobalRankingBellCurve } from '@/components/lab/bell-curve'
 import { NotFoundDossier } from '@/components/lab/not-found-dossier'
+import { MetricsExplanation } from '@/components/lab/metrics-explanation'
 
 export async function generateMetadata({
     params,
@@ -24,13 +25,13 @@ export async function generateMetadata({
 
     if (!profile) {
         return {
-            title: `Subject Not Found | Breaking Devs`,
-            description: `No laboratory dossier on record for @${username}.`,
+            title: `Developer Not Found | Breaking Devs`,
+            description: `No developer profile found for @${username}.`,
         }
     }
 
-    const title = `@${profile.githubUsername}'s Dossier | Breaking Devs`
-    const description = `Subject @${profile.githubUsername} laboratory dossier. Persona match: ${profile.characterId} (${Math.round(profile.characterSimilarity)}% purity).`
+    const title = `@${profile.githubUsername}'s Developer Profile | Breaking Devs`
+    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${profile.characterId} (${Math.round(profile.characterSimilarity)}% match).`
     const ogImageUrl = `/api/lab/og/${encodeURIComponent(profile.githubUsername)}`
 
     return {
@@ -94,7 +95,7 @@ async function ProfileContent({
         displayData.primaryCharacter.summary
 
     return (
-        <div className="min-h-screen bg-black text-white">
+        <div className="bg-background text-foreground min-h-screen font-sans">
             {/* Section 1: Character Reveal Hero */}
             <CharacterHero
                 username={profile.githubUsername}
@@ -111,10 +112,13 @@ async function ProfileContent({
             {/* Section 3: Trait Radar Chart */}
             <TraitRadarChart traits={displayData.traits} />
 
-            {/* Section 4: Achievements Grid */}
+            {/* Section 4: Methodology & Metrics Explanation */}
+            <MetricsExplanation />
+
+            {/* Section 5: Achievements Grid */}
             <AchievementsGrid achievements={displayData.achievements} />
 
-            {/* Section 5: Global Ranking Bell Curve */}
+            {/* Section 6: Global Ranking Bell Curve */}
             <GlobalRankingBellCurve
                 userScore={profile.developerScore}
                 username={profile.githubUsername}

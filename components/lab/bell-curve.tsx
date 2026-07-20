@@ -11,7 +11,6 @@ import {
     XAxis,
     YAxis,
 } from 'recharts'
-import { Award, BarChart3, TrendingUp, Users } from 'lucide-react'
 import { calculateBellCurveStats } from '@/lib/lab/bell-curve'
 import { LabProfile } from '@/db/types'
 
@@ -30,107 +29,100 @@ export function GlobalRankingBellCurve({
 }: BellCurveProps) {
     const stats = calculateBellCurveStats(userScore, allProfiles)
 
-    // Find exact or closest x-score point in distribution
     const closestPoint = stats.distribution.find((p) => p.isUserPosition) || {
         score: Math.round(userScore),
         density: stats.userDensity,
     }
 
     return (
-        <section className="relative w-full overflow-hidden bg-black px-4 py-12 font-[family-name:var(--font-space-grotesk)] text-white">
+        <section className="bg-background text-foreground relative w-full px-4 py-12 font-sans">
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.8,
-                    ease: [0.25, 0.1, 0.25, 1.0] as const,
-                }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="mx-auto flex w-full max-w-6xl flex-col items-center"
             >
-                {/* Header Badge */}
-                <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-green-500/30 bg-green-950/40 px-3 py-1 font-mono text-xs tracking-wider text-green-400 uppercase">
-                    <BarChart3 className="h-3.5 w-3.5 text-green-400" />
-                    <span>SECTION 05 // GLOBAL DOSSIER RANKING</span>
+                {/* Section Header */}
+                <div className="mb-2 text-center">
+                    <span className="text-muted-foreground font-mono text-xs uppercase">
+                        GLOBAL DEVELOPER COMPARISON
+                    </span>
+                    <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
+                        Developer Score Distribution
+                    </h2>
+                    <p className="text-muted-foreground mt-1 max-w-xl text-center font-mono text-xs sm:text-sm">
+                        Shows where @{username}&apos;s score of {userScore}{' '}
+                        places them relative to all analyzed developers.
+                    </p>
                 </div>
 
-                <h2 className="mb-2 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    Global Subject Distribution
-                </h2>
-                <p className="mb-8 max-w-xl text-center font-mono text-xs text-gray-400 sm:text-sm">
-                    Population-level developer score bell curve showing @
-                    {username}&apos;s position within the overall subject pool.
-                </p>
-
-                {/* Prominent Stat Callouts Grid */}
-                <div className="mb-8 grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
-                    <div className="rounded-xl border border-green-500/20 bg-gradient-to-b from-green-950/30 to-black p-4 shadow-lg backdrop-blur-md">
-                        <div className="mb-1 flex items-center justify-between font-mono text-xs text-gray-400">
-                            <span>PERCENTILE</span>
-                            <TrendingUp className="h-3.5 w-3.5 text-green-400" />
+                {/* Stat Callouts Grid */}
+                <div className="mt-8 grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
+                    <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
+                        <div className="text-muted-foreground font-mono text-xs">
+                            PERCENTILE
                         </div>
-                        <div className="font-mono text-xl font-black text-green-400 sm:text-2xl">
+                        <div className="text-primary mt-1 font-mono text-2xl font-extrabold">
                             Top {100 - stats.percentile}%
                         </div>
-                        <div className="mt-1 font-mono text-[11px] text-gray-400">
-                            {stats.percentile}th percentile overall
+                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                            Higher than {stats.percentile}% of developers
                         </div>
                     </div>
 
-                    <div className="rounded-xl border border-green-500/20 bg-gradient-to-b from-green-950/30 to-black p-4 shadow-lg backdrop-blur-md">
-                        <div className="mb-1 flex items-center justify-between font-mono text-xs text-gray-400">
-                            <span>GLOBAL RANK</span>
-                            <Award className="h-3.5 w-3.5 text-green-400" />
+                    <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
+                        <div className="text-muted-foreground font-mono text-xs">
+                            GLOBAL RANK
                         </div>
-                        <div className="font-mono text-xl font-black text-white sm:text-2xl">
+                        <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             #{stats.rank}
                         </div>
-                        <div className="mt-1 font-mono text-[11px] text-gray-400">
-                            of {stats.totalSubjects} analyzed subjects
+                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                            Out of {stats.totalSubjects} developers analyzed
                         </div>
                     </div>
 
-                    <div className="rounded-xl border border-green-500/20 bg-gradient-to-b from-green-950/30 to-black p-4 shadow-lg backdrop-blur-md">
-                        <div className="mb-1 flex items-center justify-between font-mono text-xs text-gray-400">
-                            <span>HIGHER PURITY</span>
-                            <Users className="h-3.5 w-3.5 text-emerald-400" />
+                    <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
+                        <div className="text-muted-foreground font-mono text-xs">
+                            HIGHER SCORES
                         </div>
-                        <div className="font-mono text-xl font-black text-emerald-400 sm:text-2xl">
+                        <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             {stats.usersAbove}
                         </div>
-                        <div className="mt-1 font-mono text-[11px] text-gray-400">
-                            subjects scored above
+                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                            Developers with a higher score
                         </div>
                     </div>
 
-                    <div className="rounded-xl border border-green-500/20 bg-gradient-to-b from-green-950/30 to-black p-4 shadow-lg backdrop-blur-md">
-                        <div className="mb-1 flex items-center justify-between font-mono text-xs text-gray-400">
-                            <span>LOWER PURITY</span>
-                            <Users className="h-3.5 w-3.5 text-gray-400" />
+                    <div className="border-border bg-card rounded-xl border p-4 shadow-sm">
+                        <div className="text-muted-foreground font-mono text-xs">
+                            LOWER SCORES
                         </div>
-                        <div className="font-mono text-xl font-black text-gray-300 sm:text-2xl">
+                        <div className="text-foreground mt-1 font-mono text-2xl font-extrabold">
                             {stats.usersBelow}
                         </div>
-                        <div className="mt-1 font-mono text-[11px] text-gray-400">
-                            subjects scored below
+                        <div className="text-muted-foreground mt-1 font-mono text-[11px]">
+                            Developers with a lower score
                         </div>
                     </div>
                 </div>
 
-                {/* Prominent Main Bell Curve Chart Container */}
-                <div className="relative w-full rounded-2xl border border-green-500/20 bg-gradient-to-b from-green-950/20 via-black/90 to-black p-4 shadow-2xl backdrop-blur-md sm:p-8">
-                    <div className="mb-4 flex items-center justify-between border-b border-green-500/15 pb-3">
-                        <span className="font-mono text-xs font-bold tracking-wider text-green-400 uppercase">
-                            DEVELOPER SCORE GAUSSIAN DISTRIBUTION
+                {/* Bell Curve Chart Container */}
+                <div className="border-border bg-card relative mt-6 w-full rounded-xl border p-6 shadow-md sm:p-8">
+                    <div className="border-border mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3 font-mono text-xs">
+                        <span className="text-foreground font-bold uppercase">
+                            DEVELOPER SCORE BELL CURVE
                         </span>
-                        <div className="flex items-center gap-2 font-mono text-xs text-gray-400">
-                            <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-                            <span>Subject Score: {userScore} / 100</span>
+                        <div className="text-muted-foreground">
+                            Score:{' '}
+                            <span className="text-primary font-bold">
+                                {userScore} / 100
+                            </span>
                         </div>
                     </div>
 
-                    <div className="min-h-[350px] w-full">
-                        <ResponsiveContainer width="100%" height={360}>
+                    <div className="min-h-[340px] w-full">
+                        <ResponsiveContainer width="100%" height={340}>
                             <AreaChart
                                 data={stats.distribution}
                                 margin={{
@@ -150,34 +142,21 @@ export function GlobalRankingBellCurve({
                                     >
                                         <stop
                                             offset="5%"
-                                            stopColor="var(--chart-1)"
-                                            stopOpacity={0.6}
-                                        />
-                                        <stop
-                                            offset="50%"
-                                            stopColor="var(--chart-2)"
-                                            stopOpacity={0.3}
+                                            stopColor="var(--primary)"
+                                            stopOpacity={0.4}
                                         />
                                         <stop
                                             offset="95%"
-                                            stopColor="var(--chart-5)"
+                                            stopColor="var(--primary)"
                                             stopOpacity={0.05}
                                         />
                                     </linearGradient>
                                 </defs>
                                 <XAxis
                                     dataKey="score"
-                                    stroke="#4b5563"
+                                    stroke="var(--border)"
                                     tick={{
-                                        fill: '#9ca3af',
-                                        fontSize: 11,
-                                        fontFamily: 'var(--font-mono)',
-                                    }}
-                                    label={{
-                                        value: 'Developer Score (0 - 100)',
-                                        position: 'insideBottom',
-                                        offset: -12,
-                                        fill: '#4ade80',
+                                        fill: 'var(--muted-foreground)',
                                         fontSize: 11,
                                         fontFamily: 'var(--font-mono)',
                                     }}
@@ -192,16 +171,13 @@ export function GlobalRankingBellCurve({
                                         ) {
                                             const data = payload[0].payload
                                             return (
-                                                <div className="rounded-lg border border-green-500/40 bg-black/95 px-3 py-2 text-xs shadow-xl backdrop-blur-md">
-                                                    <p className="font-mono font-bold text-green-400">
+                                                <div className="border-border bg-card rounded-lg border px-3 py-2 font-mono text-xs shadow-md">
+                                                    <p className="text-foreground font-bold">
                                                         Score Bucket:{' '}
                                                         {data.score}
                                                     </p>
-                                                    <p className="font-mono text-gray-300">
-                                                        Relative Density:{' '}
-                                                        <span className="font-bold text-white">
-                                                            {data.density}%
-                                                        </span>
+                                                    <p className="text-muted-foreground">
+                                                        Density: {data.density}%
                                                     </p>
                                                 </div>
                                             )
@@ -212,36 +188,38 @@ export function GlobalRankingBellCurve({
                                 <Area
                                     type="monotone"
                                     dataKey="density"
-                                    stroke="var(--chart-1)"
+                                    stroke="var(--primary)"
                                     strokeWidth={2}
                                     fill="url(#bellCurveGradient)"
-                                    isAnimationActive={true}
-                                    animationDuration={1000}
                                 />
                                 <ReferenceLine
                                     x={closestPoint.score}
-                                    stroke="#4ade80"
+                                    stroke="var(--primary)"
                                     strokeWidth={2}
                                     strokeDasharray="4 4"
-                                    label={{
-                                        value: `@${username} (${userScore})`,
-                                        position: 'top',
-                                        fill: '#4ade80',
-                                        fontSize: 11,
-                                        fontFamily: 'var(--font-mono)',
-                                        fontWeight: 'bold',
-                                    }}
                                 />
                                 <ReferenceDot
                                     x={closestPoint.score}
                                     y={closestPoint.density}
                                     r={6}
-                                    fill="#4ade80"
-                                    stroke="#000"
+                                    fill="var(--primary)"
+                                    stroke="var(--background)"
                                     strokeWidth={2}
                                 />
                             </AreaChart>
                         </ResponsiveContainer>
+                    </div>
+
+                    <div className="border-border bg-muted/40 text-muted-foreground mt-4 space-y-1 rounded-lg border p-4 font-sans text-xs leading-relaxed">
+                        <div className="text-foreground font-mono text-xs font-bold">
+                            HOW RANKINGS ARE CALCULATED:
+                        </div>
+                        <p>
+                            Your developer score is calculated from repository
+                            activity, commit regularity, code variety, and pull
+                            request involvement. The curve represents the
+                            overall distribution of all developers index.
+                        </p>
                     </div>
                 </div>
             </motion.div>

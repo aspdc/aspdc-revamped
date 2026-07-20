@@ -1,14 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
-import { ShieldAlert, RefreshCw, ArrowRight, UserCheck } from 'lucide-react'
 import {
     getCharacterImageUrl,
     type CharacterProfile,
 } from '@/lib/lab/characters'
-
-import Image from 'next/image'
 import { ShareButtons } from './share-buttons'
 
 type CharacterHeroProps = {
@@ -19,8 +18,6 @@ type CharacterHeroProps = {
     explanation: string
     isOwner: boolean
 }
-
-import { useState } from 'react'
 
 export function CharacterHero({
     username,
@@ -34,120 +31,125 @@ export function CharacterHero({
     const [imgSrc, setImgSrc] = useState(initialImgSrc)
 
     return (
-        <section className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden bg-black px-4 py-12 font-[family-name:var(--font-space-grotesk)] text-white">
-            {/* Background glow & subtle grid pattern */}
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-950/30 via-black to-black" />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#052e1615_1px,transparent_1px),linear-gradient(to_bottom,#052e1615_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-
+        <section className="bg-background text-foreground relative flex flex-col items-center justify-center px-4 py-12 font-sans md:py-16">
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.8,
-                    ease: [0.25, 0.1, 0.25, 1.0] as const,
-                }}
-                className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center text-center"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mx-auto flex w-full max-w-4xl flex-col items-center text-center"
             >
-                {/* Classified Stamp Aesthetic */}
-                <div className="mb-6 inline-flex rotate-[-2deg] items-center gap-2 rounded-sm border-2 border-[#22c55e]/60 bg-[#22c55e]/10 px-3.5 py-1.5 font-mono text-xs font-extrabold tracking-[0.3em] text-[#22c55e] uppercase shadow-[0_0_20px_rgba(34,197,94,0.2)]">
-                    <ShieldAlert className="h-4 w-4 text-[#22c55e]" />
-                    <span>CLASSIFIED // SUBJECT DOSSIER</span>
-                </div>
-
-                {/* Main Dossier Container */}
-                <div className="relative w-full rounded-2xl border border-green-500/20 bg-gradient-to-b from-green-950/20 via-black/80 to-black p-6 shadow-2xl backdrop-blur-md sm:p-10">
-                    {/* Top Status Header */}
-                    <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-green-500/15 pb-4 font-mono text-xs text-gray-400">
-                        <div className="flex items-center gap-2">
-                            <span className="relative flex h-2.5 w-2.5">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
-                            </span>
-                            <span className="font-bold tracking-wider text-green-400 uppercase">
-                                SUBJECT IDENTIFIED
-                            </span>
-                        </div>
-                        <div className="font-mono text-gray-400">
-                            TARGET:{' '}
-                            <span className="font-semibold text-white">
+                {/* Main Card */}
+                <div className="border-border bg-card w-full rounded-xl border p-6 shadow-xl md:p-10">
+                    {/* Header Info */}
+                    <div className="border-border text-muted-foreground mb-8 flex flex-wrap items-center justify-between gap-3 border-b pb-4 font-mono text-xs">
+                        <div>DEVELOPER PROFILE ANALYSIS</div>
+                        <div>
+                            GITHUB HANDLER:{' '}
+                            <span className="text-foreground font-bold">
                                 @{username}
                             </span>
                         </div>
                     </div>
 
-                    {/* Primary Character Reveal */}
-                    <div className="space-y-4">
-                        <p className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
-                            PRIMARY LABORATORY MATCH
-                        </p>
-
-                        {/* Character Image / Portrait Placeholder Container */}
-                        <div className="relative mx-auto my-4 h-44 w-44 overflow-hidden rounded-2xl border-2 border-[#22c55e]/40 bg-gradient-to-b from-green-950/60 to-black shadow-[0_0_25px_rgba(34,197,94,0.25)] sm:h-52 sm:w-52">
-                            <Image
-                                src={imgSrc}
-                                alt={character.name}
-                                fill
-                                className="object-cover transition-transform duration-500 hover:scale-105"
-                                priority
-                                onError={() => setImgSrc('/placeholder.svg')}
-                            />
-                        </div>
-
-                        <h1 className="text-5xl font-extrabold tracking-tight text-[#22c55e] drop-shadow-[0_0_25px_rgba(34,197,94,0.35)] sm:text-7xl">
-                            {character.name}
-                        </h1>
-
-                        {/* Similarity & Developer Score Badges */}
-                        <div className="flex flex-wrap items-center justify-center gap-3 py-2">
-                            <div className="rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1.5 text-sm font-semibold text-green-400">
-                                Similarity Purity:{' '}
-                                <span className="font-bold text-white">
-                                    {Math.round(similarity)}%
-                                </span>
+                    {/* Character & Metrics Overview */}
+                    <div className="grid grid-cols-1 items-center gap-8 text-left md:grid-cols-12">
+                        {/* Portrait */}
+                        <div className="flex flex-col items-center md:col-span-5">
+                            <div className="border-border bg-muted relative h-52 w-52 overflow-hidden rounded-xl border p-1 shadow-md sm:h-60 sm:w-60">
+                                <Image
+                                    src={imgSrc}
+                                    alt={character.name}
+                                    fill
+                                    className="rounded-lg object-cover"
+                                    priority
+                                    onError={() =>
+                                        setImgSrc('/placeholder.svg')
+                                    }
+                                />
                             </div>
-                            <div className="rounded-full border border-green-500/20 bg-green-950/40 px-4 py-1.5 text-sm font-semibold text-gray-300">
-                                Developer Score:{' '}
-                                <span className="font-bold text-white">
-                                    {developerScore}
-                                </span>
-                                <span className="text-xs text-gray-500">
-                                    /100
-                                </span>
+                            <div className="text-muted-foreground mt-3 font-mono text-xs tracking-wider uppercase">
+                                {character.id.replace(/-/g, ' ')}
                             </div>
                         </div>
 
-                        {/* Character Match Explanation */}
-                        <p className="mx-auto max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg">
-                            {explanation || character.summary}
-                        </p>
+                        {/* Details & Layman Explanations */}
+                        <div className="space-y-5 md:col-span-7">
+                            <div>
+                                <span className="text-muted-foreground font-mono text-xs uppercase">
+                                    PRIMARY DEVELOPER ARCHETYPE MATCH
+                                </span>
+                                <h1 className="text-foreground text-3xl font-extrabold tracking-tight sm:text-4xl">
+                                    {character.name}
+                                </h1>
+                            </div>
+
+                            {/* Core Metrics Grid */}
+                            <div className="grid grid-cols-2 gap-4">
+                                {/* Match Similarity */}
+                                <div className="border-border bg-background/50 rounded-lg border p-4">
+                                    <div className="text-muted-foreground font-mono text-xs">
+                                        ARCHETYPE MATCH
+                                    </div>
+                                    <div className="text-primary mt-1 font-mono text-3xl font-extrabold">
+                                        {Math.round(similarity)}%
+                                    </div>
+                                    <p className="text-muted-foreground mt-1 text-xs leading-normal">
+                                        How closely your commit patterns match
+                                        this persona.
+                                    </p>
+                                </div>
+
+                                {/* Developer Score */}
+                                <div className="border-border bg-background/50 rounded-lg border p-4">
+                                    <div className="text-muted-foreground font-mono text-xs">
+                                        DEVELOPER SCORE
+                                    </div>
+                                    <div className="text-foreground mt-1 font-mono text-3xl font-extrabold">
+                                        {developerScore}
+                                        <span className="text-muted-foreground text-xs font-normal">
+                                            {' '}
+                                            / 100
+                                        </span>
+                                    </div>
+                                    <p className="text-muted-foreground mt-1 text-xs leading-normal">
+                                        Rating based on commit volume,
+                                        consistency, and repo impact.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Plain English Explanation */}
+                            <div className="border-border bg-muted/40 text-muted-foreground space-y-1 rounded-lg border p-4 text-xs leading-relaxed">
+                                <div className="text-foreground font-mono font-bold">
+                                    WHY YOU MATCHED THIS PERSONA:
+                                </div>
+                                <p>{explanation || character.summary}</p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Sharing Strip */}
-                    <div className="mt-6 border-t border-green-500/15 pt-6">
+                    <div className="border-border mt-8 border-t pt-6">
                         <ShareButtons username={username} />
                     </div>
 
-                    {/* Owner vs Non-owner CTAs */}
-                    <div className="mt-6 flex flex-col items-center justify-center gap-4 border-t border-green-500/15 pt-6 sm:flex-row">
+                    {/* Actions */}
+                    <div className="border-border mt-6 flex flex-col items-center justify-center gap-4 border-t pt-6 sm:flex-row">
                         {isOwner ? (
                             <Link
                                 href="/lab/analyze"
                                 prefetch={false}
-                                className="group inline-flex items-center gap-2 rounded-lg border border-green-500/25 bg-green-500/5 px-4 py-2 text-xs font-semibold text-gray-300 transition-all hover:border-green-500/50 hover:bg-green-500/15 hover:text-green-400"
+                                className="border-border bg-muted text-foreground hover:bg-border rounded-lg border px-5 py-2.5 text-sm font-medium transition-all"
                             >
-                                <RefreshCw className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
-                                <span>Re-analyse Dossier</span>
+                                Re-analyse Profile
                             </Link>
                         ) : (
                             <Link
                                 href="/lab/analyze"
                                 prefetch={false}
-                                className="group inline-flex items-center gap-2 rounded-lg border border-[#22c55e] bg-[#22c55e] px-6 py-3 text-sm font-bold text-black shadow-[0_0_20px_rgba(34,197,94,0.3)] transition-all hover:scale-105 hover:bg-[#16a34a] hover:shadow-[0_0_30px_rgba(34,197,94,0.5)]"
+                                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-2.5 text-sm font-bold transition-all"
                             >
-                                <UserCheck className="h-4 w-4" />
-                                <span>Analyse Your Own Profile</span>
-                                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                                Analyse Your Own Profile
                             </Link>
                         )}
                     </div>

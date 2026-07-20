@@ -10,7 +10,6 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from 'recharts'
-import { Activity, Beaker, Sparkles } from 'lucide-react'
 import { TRAIT_IDS, type TraitVector } from '@/lib/lab/types'
 import { getTraitLabel } from '@/lib/lab/traits'
 
@@ -19,14 +18,12 @@ type TraitRadarProps = {
 }
 
 export function TraitRadarChart({ traits }: TraitRadarProps) {
-    // Transform traits into chart data array
     const chartData = TRAIT_IDS.map((traitId) => ({
         traitId,
         label: getTraitLabel(traitId),
         score: traits[traitId] ?? 0,
     }))
 
-    // Calculate highest and lowest traits for summary callout
     const sorted = [...chartData].sort((a, b) => b.score - a.score)
     const topTraits = sorted.slice(0, 3)
     const avgScore = Math.round(
@@ -34,33 +31,29 @@ export function TraitRadarChart({ traits }: TraitRadarProps) {
     )
 
     return (
-        <section className="relative w-full overflow-hidden bg-black px-4 py-12 font-[family-name:var(--font-space-grotesk)] text-white">
+        <section className="bg-background text-foreground relative w-full px-4 py-12 font-sans">
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                    duration: 0.8,
-                    ease: [0.25, 0.1, 0.25, 1.0] as const,
-                }}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
                 className="mx-auto flex w-full max-w-6xl flex-col items-center"
             >
-                {/* Header Badge */}
-                <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-green-500/30 bg-green-950/40 px-3 py-1 font-mono text-xs tracking-wider text-green-400 uppercase">
-                    <Beaker className="h-3.5 w-3.5 text-green-400" />
-                    <span>SECTION 03 // CHEMICAL COMPOSITION</span>
+                {/* Section Header */}
+                <div className="mb-2 text-center">
+                    <span className="text-muted-foreground font-mono text-xs uppercase">
+                        CODING HABITS & VECTOR BREAKDOWN
+                    </span>
+                    <h2 className="text-foreground text-2xl font-extrabold tracking-tight sm:text-3xl">
+                        15-Point Coding Style Analysis
+                    </h2>
+                    <p className="text-muted-foreground mt-1 max-w-xl text-center font-mono text-xs sm:text-sm">
+                        Measures your commit timing, refactoring frequency,
+                        language diversity, and codebase architectural focus.
+                    </p>
                 </div>
 
-                <h2 className="mb-2 text-center text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    Psychological Profile Radar
-                </h2>
-                <p className="mb-8 max-w-xl text-center font-mono text-xs text-gray-400 sm:text-sm">
-                    Multi-axis spectral analysis mapping subject traits against
-                    known lab standards across all 15 vectors.
-                </p>
-
-                {/* Main Content Container */}
-                <div className="grid w-full grid-cols-1 gap-6 rounded-2xl border border-green-500/20 bg-gradient-to-b from-green-950/20 via-black/90 to-black p-4 shadow-2xl backdrop-blur-md lg:grid-cols-12 lg:p-8">
+                {/* Main Card */}
+                <div className="border-border bg-card mt-8 grid w-full grid-cols-1 gap-8 rounded-xl border p-6 shadow-md md:p-8 lg:grid-cols-12">
                     {/* Radar Chart Column */}
                     <div className="relative flex min-h-[380px] w-full flex-col items-center justify-center lg:col-span-8">
                         <ResponsiveContainer width="100%" height={400}>
@@ -74,14 +67,14 @@ export function TraitRadarChart({ traits }: TraitRadarProps) {
                                 }}
                             >
                                 <PolarGrid
-                                    stroke="rgba(34, 197, 94, 0.15)"
+                                    stroke="var(--border)"
                                     strokeDasharray="3 3"
                                 />
                                 <PolarAngleAxis
                                     dataKey="label"
-                                    stroke="#4ade80"
+                                    stroke="var(--foreground)"
                                     tick={{
-                                        fill: '#86efac',
+                                        fill: 'var(--muted-foreground)',
                                         fontSize: 10,
                                         fontFamily: 'var(--font-mono)',
                                         fontWeight: 600,
@@ -90,7 +83,7 @@ export function TraitRadarChart({ traits }: TraitRadarProps) {
                                 <PolarRadiusAxis
                                     angle={30}
                                     domain={[0, 100]}
-                                    stroke="rgba(34, 197, 94, 0.3)"
+                                    stroke="var(--border)"
                                     tick={false}
                                     axisLine={false}
                                 />
@@ -103,21 +96,13 @@ export function TraitRadarChart({ traits }: TraitRadarProps) {
                                         ) {
                                             const data = payload[0].payload
                                             return (
-                                                <div className="rounded-lg border border-green-500/40 bg-black/95 px-3 py-2 text-xs shadow-xl backdrop-blur-md">
-                                                    <p className="font-mono font-bold text-green-400">
+                                                <div className="border-border bg-card rounded-lg border px-3 py-2 font-mono text-xs shadow-md">
+                                                    <p className="text-foreground font-bold">
                                                         {data.label}
                                                     </p>
-                                                    <p className="font-mono text-gray-300">
-                                                        Raw Vector:{' '}
-                                                        <span className="font-bold text-white">
-                                                            {data.traitId}
-                                                        </span>
-                                                    </p>
-                                                    <p className="font-mono text-green-400">
-                                                        Purity Score:{' '}
-                                                        <span className="font-extrabold text-white">
-                                                            {data.score} / 100
-                                                        </span>
+                                                    <p className="text-muted-foreground">
+                                                        Rating: {data.score} /
+                                                        100
                                                     </p>
                                                 </div>
                                             )
@@ -126,69 +111,65 @@ export function TraitRadarChart({ traits }: TraitRadarProps) {
                                     }}
                                 />
                                 <Radar
-                                    name="Trait Profile"
+                                    name="Coding Habits"
                                     dataKey="score"
-                                    stroke="var(--chart-1)"
+                                    stroke="var(--primary)"
                                     strokeWidth={2}
-                                    fill="var(--chart-1)"
-                                    fillOpacity={0.4}
-                                    isAnimationActive={true}
-                                    animationDuration={1200}
-                                    animationBegin={200}
+                                    fill="var(--primary)"
+                                    fillOpacity={0.25}
                                 />
                             </RadarChart>
                         </ResponsiveContainer>
                     </div>
 
-                    {/* Summary Callouts Side Column */}
-                    <div className="flex flex-col justify-center space-y-4 rounded-xl border border-green-500/15 bg-black/60 p-5 lg:col-span-4">
-                        <div className="flex items-center gap-2 border-b border-green-500/15 pb-3">
-                            <Activity className="h-4 w-4 text-green-400" />
-                            <span className="font-mono text-xs font-bold tracking-wider text-green-400 uppercase">
-                                SPECTRAL METRICS
+                    {/* Summary & Metric Explanations */}
+                    <div className="border-border bg-background/50 flex flex-col justify-center space-y-4 rounded-lg border p-5 font-mono text-xs lg:col-span-4">
+                        <div className="border-border border-b pb-3">
+                            <span className="text-foreground font-bold uppercase">
+                                TOP CODING TRAITS
                             </span>
                         </div>
 
-                        <div className="space-y-3 font-mono text-xs">
-                            <div className="flex items-center justify-between rounded-lg border border-green-500/10 bg-green-950/20 p-2.5">
-                                <span className="text-gray-400">
-                                    Average Trait Index
+                        <div className="space-y-3">
+                            <div className="border-border bg-card flex items-center justify-between rounded-md border p-2.5">
+                                <span className="text-muted-foreground">
+                                    Average Trait Score
                                 </span>
-                                <span className="font-bold text-green-400">
+                                <span className="text-foreground font-bold">
                                     {avgScore} / 100
                                 </span>
                             </div>
 
-                            <div>
-                                <div className="mb-2 flex items-center gap-1.5 text-gray-300">
-                                    <Sparkles className="h-3.5 w-3.5 text-green-400" />
-                                    <span className="font-bold">
-                                        Dominant Compounds:
-                                    </span>
-                                </div>
-                                <div className="space-y-2">
-                                    {topTraits.map((t, idx) => (
-                                        <div
-                                            key={t.traitId}
-                                            className="flex items-center justify-between rounded-md border border-green-500/20 bg-black/80 px-3 py-1.5"
-                                        >
-                                            <span className="text-gray-300">
-                                                {idx + 1}. {t.label} (
-                                                {t.traitId})
-                                            </span>
-                                            <span className="font-bold text-green-400">
-                                                {t.score}%
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
+                            <div className="space-y-2">
+                                <p className="text-muted-foreground font-semibold">
+                                    Your Strongest Characteristics:
+                                </p>
+                                {topTraits.map((t, idx) => (
+                                    <div
+                                        key={t.traitId}
+                                        className="border-border bg-card flex items-center justify-between rounded-md border px-3 py-2"
+                                    >
+                                        <span className="text-foreground font-medium">
+                                            {idx + 1}. {t.label}
+                                        </span>
+                                        <span className="text-primary font-bold">
+                                            {t.score}%
+                                        </span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
-                        <div className="mt-2 rounded-lg border border-yellow-500/30 bg-yellow-950/20 p-3 font-mono text-[11px] text-yellow-300/90">
-                            <span className="font-bold">DOSSIER NOTE:</span>{' '}
-                            High purity in {topTraits[0]?.label} indicates
-                            concentrated specialized capability.
+                        <div className="border-border bg-muted/40 text-muted-foreground space-y-1 rounded-lg border p-3 font-sans text-[11px] leading-relaxed">
+                            <div className="text-foreground font-mono text-xs font-bold">
+                                WHAT THESE METRICS MEAN:
+                            </div>
+                            <p>
+                                Higher scores indicate strong tendencies in
+                                specific coding styles—such as high commit
+                                velocity, frequent code refactoring, or
+                                multi-language repository management.
+                            </p>
                         </div>
                     </div>
                 </div>

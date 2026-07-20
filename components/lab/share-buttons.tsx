@@ -59,64 +59,27 @@ export function ShareButtons({ username }: ShareButtonsProps) {
     }
 
     return (
-        <div className="inline-flex flex-wrap items-center justify-center gap-3 rounded-xl border border-green-500/20 bg-green-950/20 p-2 backdrop-blur-md">
-            {/* Download Dossier Button */}
-            <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+        <div className="inline-flex flex-wrap items-center justify-center gap-3 font-sans">
+            {/* Download Profile Image Button */}
+            <button
                 onClick={handleDownload}
                 disabled={isDownloading}
-                className="group inline-flex items-center gap-2 rounded-lg border border-[#22c55e]/50 bg-[#22c55e]/15 px-4 py-2.5 font-mono text-xs font-bold tracking-wide text-[#22c55e] transition-all hover:border-[#22c55e] hover:bg-[#22c55e]/25 hover:shadow-[0_0_15px_rgba(34,197,94,0.3)] disabled:opacity-50"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2 text-xs font-bold transition-all disabled:opacity-50"
                 type="button"
             >
-                {isDownloading ? (
-                    <Loader2 className="h-4 w-4 animate-spin text-[#22c55e]" />
-                ) : (
-                    <Download className="h-4 w-4 text-[#22c55e] transition-transform group-hover:-translate-y-0.5" />
-                )}
-                <span>
-                    {isDownloading
-                        ? 'GENERATING DOSSIER...'
-                        : 'DOWNLOAD DOSSIER'}
-                </span>
-            </motion.button>
+                {isDownloading
+                    ? 'Generating Image...'
+                    : 'Download Profile Image'}
+            </button>
 
             {/* Copy Profile Link Button */}
-            <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
+            <button
                 onClick={handleCopyLink}
-                className="group inline-flex items-center gap-2 rounded-lg border border-green-500/30 bg-black/60 px-4 py-2.5 font-mono text-xs font-semibold text-gray-300 transition-all hover:border-green-500/60 hover:text-white"
+                className="border-border bg-card text-foreground hover:bg-muted rounded-lg border px-4 py-2 font-mono text-xs font-medium transition-all"
                 type="button"
             >
-                <AnimatePresence mode="wait">
-                    {copied ? (
-                        <motion.div
-                            key="check"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="flex items-center gap-1.5 text-green-400"
-                        >
-                            <Check className="h-4 w-4" />
-                            <span>COPIED TO CLIPBOARD</span>
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="copy"
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="flex items-center gap-1.5"
-                        >
-                            <Copy className="h-4 w-4 text-gray-400 transition-colors group-hover:text-green-400" />
-                            <span>COPY DOSSIER LINK</span>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.button>
+                {copied ? 'Copied to Clipboard' : 'Copy Profile Link'}
+            </button>
         </div>
     )
 }
