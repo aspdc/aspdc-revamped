@@ -1,0 +1,43 @@
+export type {
+    GitHubEventSummary,
+    GitHubRepoSummary,
+    GitHubSnapshot,
+    TraitId,
+    TraitVector,
+} from './types'
+export { TRAIT_IDS } from './types'
+export { emptyTraitVector, isTraitId, scoreTraits } from './traits'
+export { fetchGitHubSnapshot } from './github'
+export { getGitHubAccessToken } from './github-token'
+export {
+    SNAPSHOT_MAX_AGE_MS,
+    isSnapshotFresh,
+    persistGitHubSnapshot,
+    readPersistedGitHubSnapshot,
+    resolveGitHubSnapshot,
+    runAnalysisPipeline,
+    type AnalysisPipelineResult,
+    type CachedGitHubSnapshot,
+    type PersistedGitHubSnapshot,
+} from './analyze'
+export {
+    CHARACTER_PROFILES,
+    assignCharacter,
+    type CharacterId,
+    type CharacterMatch,
+    type CharacterProfile,
+} from './characters'
+export {
+    formatLeaderboardEntries,
+    getCharacterName,
+    getGitHubAvatarUrl,
+    type LabLeaderboardEntry,
+} from './leaderboard'
+
+export {
+    ACHIEVEMENTS,
+    unlockAchievements,
+    type Achievement,
+    type AchievementContext,
+    type AchievementDefinition,
+} from './achievements'

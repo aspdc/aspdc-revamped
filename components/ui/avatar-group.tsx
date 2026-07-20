@@ -12,11 +12,7 @@ import {
 import { cn } from '@/lib/utils'
 
 type AnimationVariantType =
-    | 'spring'
-    | 'tween'
-    | 'inertia'
-    | 'decay'
-    | 'keyframes'
+    'spring' | 'tween' | 'inertia' | 'decay' | 'keyframes'
 type AnimationType = 'default' | 'flip' | 'reveal'
 
 interface AvatarGroupContextValue {

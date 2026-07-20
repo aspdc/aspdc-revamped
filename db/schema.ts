@@ -10,6 +10,8 @@ import {
     boolean,
     index,
     uniqueIndex,
+    jsonb,
+    real,
 } from 'drizzle-orm/pg-core'
 
 // Events table
@@ -167,10 +169,73 @@ export const verification = pgTable(
     (table) => [index('verification_identifier_idx').on(table.identifier)]
 )
 
+export const labProfiles = pgTable(
+    'lab_profiles',
+    {
+        id: uuid().defaultRandom().primaryKey(),
+        userId: text('user_id')
+            .notNull()
+            .unique()
+            .references(() => user.id, { onDelete: 'cascade' }),
+        githubUsername: text('github_username').notNull().unique(),
+        characterId: text('character_id').notNull(),
+        characterSimilarity: real('character_similarity').notNull(),
+        developerScore: integer('developer_score').notNull(),
+        traitScores: jsonb('trait_scores')
+            .$type<Record<string, number>>()
+            .notNull(),
+        githubSnapshot: jsonb('github_snapshot')
+            .$type<Record<string, unknown>>()
+            .notNull(),
+        analyzedAt: timestamp('analyzed_at').notNull(),
+    },
+    (table) => [
+        index('lab_profiles_developerScore_idx').on(table.developerScore),
+    ]
+)
+
+export const labAchievements = pgTable(
+    'lab_achievements',
+    {
+        id: uuid().defaultRandom().primaryKey(),
+        profileId: uuid('profile_id')
+            .notNull()
+            .references(() => labProfiles.id, { onDelete: 'cascade' }),
+        achievementId: text('achievement_id').notNull(),
+        unlockedAt: timestamp('unlocked_at').defaultNow().notNull(),
+    },
+    (table) => [
+        index('lab_achievements_profileId_idx').on(table.profileId),
+        uniqueIndex('lab_achievements_profile_achievement_idx').on(
+            table.profileId,
+            table.achievementId
+        ),
+    ]
+)
+
 export const userRelations = relations(user, ({ many }) => ({
     sessions: many(session),
     accounts: many(account),
+    labProfiles: many(labProfiles),
 }))
+
+export const labProfileRelations = relations(labProfiles, ({ one, many }) => ({
+    user: one(user, {
+        fields: [labProfiles.userId],
+        references: [user.id],
+    }),
+    achievements: many(labAchievements),
+}))
+
+export const labAchievementRelations = relations(
+    labAchievements,
+    ({ one }) => ({
+        profile: one(labProfiles, {
+            fields: [labAchievements.profileId],
+            references: [labProfiles.id],
+        }),
+    })
+)
 
 export const sessionRelations = relations(session, ({ one }) => ({
     user: one(user, {

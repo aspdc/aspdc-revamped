@@ -1,7 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { db } from '@/db/drizzle' // your drizzle instance
-import { nextCookies } from 'better-auth/next-js'
 import * as schema from '@/db/schema'
 
 export const auth = betterAuth({
@@ -13,5 +12,10 @@ export const auth = betterAuth({
         enabled: true,
         disableSignUp: true, // Disable signup - only allow login with existing credentials
     },
-    plugins: [nextCookies()], // make sure this is the last plugin in the array
+    socialProviders: {
+        github: {
+            clientId: process.env.GITHUB_CLIENT_ID as string,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+        },
+    },
 })
