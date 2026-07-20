@@ -28,11 +28,11 @@ export function BreakingDevsLogo({ animate = true }: { animate?: boolean }) {
                             1
                         </span>
                         <span className="font-[family-name:var(--font-space-grotesk)] text-4xl leading-none font-bold tracking-tight text-white sm:text-5xl">
-                            De
+                            D
                         </span>
                     </div>
                     <span className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold tracking-tight text-[#22c55e] sm:text-5xl">
-                        velopers
+                        evelopers
                     </span>
                 </div>
             </div>
