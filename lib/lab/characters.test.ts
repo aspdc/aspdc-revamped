@@ -39,9 +39,9 @@ describe('assignCharacter', () => {
         }
     })
 
-    it('returns character image url with .svg extension', () => {
+    it('returns character image url with .webp extension', () => {
         expect(getCharacterImageUrl('walter-white')).toBe(
-            '/images/characters/walter-white.svg'
+            '/images/characters/walter-white.webp'
         )
     })
 })

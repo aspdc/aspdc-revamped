@@ -26,7 +26,7 @@ export type CharacterProfile = {
 }
 
 export function getCharacterImageUrl(id: CharacterId): string {
-    return `/images/characters/${id}.svg`
+    return `/images/characters/${id}.webp`
 }
 
 export type CharacterMatch = {
