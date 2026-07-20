@@ -14,6 +14,7 @@ export type ProfileDisplayData = {
     primaryCharacter: CharacterProfile
     topMatches: CharacterMatch[]
     achievements: Achievement[]
+    traits: TraitVector
 }
 
 export function getProfileDisplayData(
@@ -24,24 +25,27 @@ export function getProfileDisplayData(
 
     let topMatches: CharacterMatch[]
     let achievements: Achievement[]
+    let traits: TraitVector
 
     if (cached?.snapshot) {
         const pipelineResult = runAnalysisPipeline(cached.snapshot)
         topMatches = pipelineResult.characterMatches
         achievements = pipelineResult.achievements
+        traits = pipelineResult.traitScores
     } else {
         // Reconstruct TraitVector from stored profile
-        const vector: TraitVector = emptyTraitVector(40)
+        traits = emptyTraitVector(40)
         if (profile.traitScores && typeof profile.traitScores === 'object') {
+            const rawScores = profile.traitScores as Record<string, unknown>
             for (const id of TRAIT_IDS) {
-                const val = profile.traitScores[id as TraitId]
+                const val = rawScores[id]
                 if (typeof val === 'number') {
-                    vector[id] = val
+                    traits[id as TraitId] = val
                 }
             }
         }
 
-        topMatches = assignCharacter(vector)
+        topMatches = assignCharacter(traits)
 
         if (dbAchievementIds && dbAchievementIds.length > 0) {
             const idSet = new Set(dbAchievementIds)
@@ -84,5 +88,6 @@ export function getProfileDisplayData(
         primaryCharacter,
         topMatches,
         achievements,
+        traits,
     }
 }

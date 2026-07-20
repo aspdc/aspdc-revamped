@@ -3,12 +3,15 @@ import { headers } from 'next/headers'
 import {
     fetchLabAchievementsByProfileId,
     fetchLabProfileByGithubUsername,
+    fetchLabProfilesByScore,
 } from '@/db/queries'
 import { auth } from '@/lib/auth'
 import { getProfileDisplayData } from '@/lib/lab/profile'
 import { CharacterHero } from '@/components/lab/character-hero'
 import { TopMatches } from '@/components/lab/top-matches'
+import { TraitRadarChart } from '@/components/lab/trait-radar'
 import { AchievementsGrid } from '@/components/lab/achievements-grid'
+import { GlobalRankingBellCurve } from '@/components/lab/bell-curve'
 import { NotFoundDossier } from '@/components/lab/not-found-dossier'
 
 export async function generateMetadata({
@@ -52,7 +55,11 @@ async function ProfileContent({
         session?.user?.id && session.user.id === profile.userId
     )
 
-    const dbAchievementIds = await fetchLabAchievementsByProfileId(profile.id)
+    const [dbAchievementIds, allProfiles] = await Promise.all([
+        fetchLabAchievementsByProfileId(profile.id),
+        fetchLabProfilesByScore(),
+    ])
+
     const displayData = getProfileDisplayData(profile, dbAchievementIds)
 
     const primaryExplanation =
@@ -74,8 +81,18 @@ async function ProfileContent({
             {/* Section 2: Top 3 Character Matches */}
             <TopMatches matches={displayData.topMatches} />
 
-            {/* Section 3: Achievements Grid */}
+            {/* Section 3: Trait Radar Chart */}
+            <TraitRadarChart traits={displayData.traits} />
+
+            {/* Section 4: Achievements Grid */}
             <AchievementsGrid achievements={displayData.achievements} />
+
+            {/* Section 5: Global Ranking Bell Curve */}
+            <GlobalRankingBellCurve
+                userScore={profile.developerScore}
+                username={profile.githubUsername}
+                allProfiles={allProfiles}
+            />
         </div>
     )
 }
