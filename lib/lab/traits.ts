@@ -280,3 +280,25 @@ export function emptyTraitVector(fill = 0): TraitVector {
 export function isTraitId(value: string): value is TraitId {
     return (TRAIT_IDS as readonly string[]).includes(value)
 }
+
+export const BREAKING_BAD_TRAIT_NAMES: Record<TraitId, string> = {
+    Builder: 'Batch Output',
+    Architect: 'Lab Blueprint',
+    Scientist: 'Chemistry',
+    Explorer: 'Territory',
+    TeamPlayer: 'Syndicate',
+    Mentor: 'Master Cook',
+    Leadership: 'Empire',
+    Consistency: 'Batch Quality',
+    Discipline: 'Purity',
+    Curiosity: 'Reactivity',
+    Creativity: 'Formula R&D',
+    Documentation: 'Cook Notes',
+    OpenSource: 'Distribution',
+    Communication: 'Dispatches',
+    Chaos: 'Volatility',
+}
+
+export function getTraitLabel(traitId: TraitId): string {
+    return BREAKING_BAD_TRAIT_NAMES[traitId] ?? traitId
+}

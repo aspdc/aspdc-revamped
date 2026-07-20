@@ -1,46 +1,37 @@
-import { Suspense } from 'react'
-import { headers } from 'next/headers'
-import { auth } from '@/lib/auth'
-import { GitHubSignInButton } from './github-sign-in-button'
+'use client'
 
-async function LabContent() {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    })
+import { authClient } from '@/lib/auth-client'
+import { GitHubSignInButton } from './github-sign-in-button'
+import { BreakingDevsLogo } from './breaking-devs-logo'
+import Link from 'next/link'
+
+export default function LabPage() {
+    const { data: session, isPending } = authClient.useSession()
 
     return (
         <div className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-6 px-4 py-16 text-center">
-            <div className="space-y-2">
-                <h1 className="text-3xl font-semibold tracking-tight">
-                    Breaking Dev
-                </h1>
+            <div className="space-y-4">
+                <BreakingDevsLogo animate={false} />
                 <p className="text-muted-foreground text-sm">
-                    Sign in with GitHub to enter the lab and analyse your
-                    developer profile.
+                    {isPending
+                        ? 'Loading...'
+                        : session
+                          ? `Signed in as ${session.user.name || session.user.email}`
+                          : 'Sign in with GitHub to enter the lab and analyse your developer profile.'}
                 </p>
             </div>
-            {session ? (
-                <p className="text-sm">
-                    Signed in as{' '}
-                    <span className="font-medium">{session.user.name}</span>
-                </p>
-            ) : (
-                <GitHubSignInButton />
-            )}
-        </div>
-    )
-}
 
-export default function LabPage() {
-    return (
-        <Suspense
-            fallback={
-                <div className="mx-auto flex min-h-dvh max-w-lg items-center justify-center px-4 py-16 text-center">
-                    <p className="text-muted-foreground text-sm">Loading...</p>
-                </div>
-            }
-        >
-            <LabContent />
-        </Suspense>
+            {!isPending &&
+                (session ? (
+                    <Link
+                        href="/lab/analyze"
+                        className="rounded-lg border border-green-500/30 bg-green-500/10 px-6 py-3 text-sm font-semibold text-green-400 transition-colors hover:border-green-500/50 hover:bg-green-500/20"
+                    >
+                        Enter the lab
+                    </Link>
+                ) : (
+                    <GitHubSignInButton />
+                ))}
+        </div>
     )
 }

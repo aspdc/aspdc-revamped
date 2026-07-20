@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { scoreTraits } from './traits'
+import { BREAKING_BAD_TRAIT_NAMES, getTraitLabel, scoreTraits } from './traits'
 import { TRAIT_IDS, type GitHubSnapshot } from './types'
 
 function emptySnapshot(
@@ -253,5 +253,13 @@ describe('scoreTraits', () => {
             })
         )
         assertValidVector(vector)
+    })
+
+    it('maps all 15 traits to Breaking Bad vocabulary with Discipline as Purity', () => {
+        for (const trait of TRAIT_IDS) {
+            expect(BREAKING_BAD_TRAIT_NAMES[trait]).toBeDefined()
+            expect(typeof getTraitLabel(trait)).toBe('string')
+        }
+        expect(getTraitLabel('Discipline')).toBe('Purity')
     })
 })

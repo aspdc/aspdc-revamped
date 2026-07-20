@@ -14,7 +14,7 @@ export function GitHubSignInButton() {
         try {
             await authClient.signIn.social({
                 provider: 'github',
-                callbackURL: '/lab',
+                callbackURL: '/lab/analyze',
             })
         } catch (error) {
             toast.error('An error occurred during GitHub sign-in')
