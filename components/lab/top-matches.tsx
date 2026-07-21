@@ -37,7 +37,7 @@ export function TopMatches({ matches }: TopMatchesProps) {
                     </h2>
                     <p className="text-muted-foreground mx-auto mt-2 max-w-xl text-base leading-relaxed">
                         Ranked by how closely your 15 coding traits match each
-                        developer archetype. The percentage is a cosine
+                        developer archetype. The percentage is a persona
                         similarity score — higher means your coding style is
                         more like that archetype.
                     </p>

@@ -130,30 +130,27 @@ export function MetricsExplanation() {
                         Developer Score (0 – 100)
                     </h3>
                     <div className="space-y-2">
-                        <AccordionItem title="Commit Volume — 35%">
+                        <AccordionItem title="Engineering Fundamentals — Volume & Quality">
                             <p className="text-muted-foreground">
-                                How many commits you pushed in the last 90 days,
-                                weighted against the number of original repos
-                                you own. More pushes across more repos means a
-                                higher volume score.
+                                Measures commit volume across original
+                                repositories, repository presentation
+                                (descriptions, topic tags, languages), and
+                                active contribution frequency.
                             </p>
                         </AccordionItem>
-                        <AccordionItem title="Repo Quality — 35%">
+                        <AccordionItem title="Technical Range & Exploration">
                             <p className="text-muted-foreground">
-                                Whether your repos have descriptions, README
-                                files, relevant topic tags, and a reasonable
-                                star or fork count. This measures how polished
-                                and documented your work is — not just that it
-                                exists.
+                                Evaluates multi-language mastery and breadth of
+                                project domains. Working across diverse stacks
+                                raises your Scientist and Curiosity scores.
                             </p>
                         </AccordionItem>
-                        <AccordionItem title="Commit Discipline — 30%">
+                        <AccordionItem title="Consistency & Discipline">
                             <p className="text-muted-foreground">
-                                How regularly you commit over time. Measured by
-                                how many distinct days you were active and how
-                                evenly spaced your pushes were — not just total
-                                count. Erratic bursts score lower than steady
-                                daily contributions.
+                                Analyzes regularity of commit patterns over
+                                time. Steady, sustained coding activity across
+                                the 90-day window scores higher than erratic
+                                single-day bursts.
                             </p>
                         </AccordionItem>
                     </div>
@@ -167,17 +164,13 @@ export function MetricsExplanation() {
                     <div className="space-y-2">
                         <AccordionItem title="How matching works">
                             <p className="text-muted-foreground">
-                                Your 15 trait scores form a vector — think of it
-                                as a fingerprint in 15-dimensional space. We
-                                compare that fingerprint against pre-defined
-                                developer archetype vectors using{' '}
-                                <strong className="text-foreground">
-                                    cosine similarity
-                                </strong>
-                                , the same technique search engines use to match
-                                documents. The percentage tells you how
-                                directionally similar your coding style is to
-                                each archetype.
+                                Your 15 trait scores form a 15-dimensional
+                                vector. We compare your coding profile against
+                                each developer archetype using a blended
+                                similarity algorithm combining vector direction
+                                with signature trait emphasis. The percentage
+                                measures how closely your developer habits align
+                                with that archetype.
                             </p>
                         </AccordionItem>
                         <AccordionItem title="What the percentages mean">

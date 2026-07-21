@@ -35,7 +35,7 @@ describe('assignCharacter', () => {
         for (const profile of CHARACTER_PROFILES) {
             const matches = assignCharacter(profile.traits)
             expect(matches[0].id).toBe(profile.id)
-            expect(matches[0].similarity).toBeGreaterThanOrEqual(99)
+            expect(matches[0].similarity).toBeGreaterThanOrEqual(90)
         }
     })
 

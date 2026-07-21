@@ -28,8 +28,9 @@ export async function generateMetadata({
         }
     }
 
+    const displayData = getProfileDisplayData(profile)
     const title = `@${profile.githubUsername}'s Developer Profile | Breaking Devs`
-    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${profile.characterId} (${profile.characterSimilarity.toFixed(2)}% match).`
+    const description = `GitHub developer analysis for @${profile.githubUsername}. Persona match: ${displayData.primaryCharacter.name} (${displayData.primarySimilarity.toFixed(2)}% match).`
     const ogImageUrl = `/api/lab/og/${encodeURIComponent(profile.githubUsername)}`
 
     return {
@@ -85,8 +86,8 @@ async function ProfileContent({
             <CharacterHero
                 username={profile.githubUsername}
                 character={displayData.primaryCharacter}
-                similarity={profile.characterSimilarity}
-                developerScore={profile.developerScore}
+                similarity={displayData.primarySimilarity}
+                developerScore={displayData.developerScore}
                 explanation={primaryExplanation}
                 profileUserId={profile.userId}
             />
@@ -99,7 +100,7 @@ async function ProfileContent({
 
             {/* Section 4: Global Ranking Distribution */}
             <GlobalRankingBellCurve
-                userScore={profile.developerScore}
+                userScore={displayData.developerScore}
                 username={profile.githubUsername}
                 allProfiles={allProfiles}
             />
