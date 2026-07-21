@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { fetchLabProfileByGithubUsername } from '@/db/queries'
-import { CHARACTER_PROFILES } from '@/lib/lab/characters'
+import { getProfileDisplayData } from '@/lib/lab/profile'
 
 async function loadSpaceGroteskFont(): Promise<ArrayBuffer | null> {
     try {
@@ -31,9 +31,10 @@ export async function GET(
         return new Response('Not Found', { status: 404 })
     }
 
-    const primaryCharacter =
-        CHARACTER_PROFILES.find((c) => c.id === profile.characterId) ||
-        CHARACTER_PROFILES[0]!
+    const displayData = getProfileDisplayData(profile)
+    const primaryCharacter = displayData.primaryCharacter
+    const characterSimilarity = displayData.primarySimilarity
+    const developerScore = displayData.developerScore
 
     const fontData = await loadSpaceGroteskFont()
 
@@ -172,7 +173,7 @@ export async function GET(
                     >
                         Archetype Match:{' '}
                         <span style={{ color: '#ffffff' }}>
-                            {profile.characterSimilarity.toFixed(2)}%
+                            {characterSimilarity.toFixed(2)}%
                         </span>
                     </div>
 
@@ -192,7 +193,7 @@ export async function GET(
                     >
                         Developer Score:{' '}
                         <span style={{ color: '#22c55e' }}>
-                            {profile.developerScore}
+                            {developerScore}
                         </span>
                         /100
                     </div>

@@ -254,6 +254,27 @@ export function scoreTraits(snapshot: GitHubSnapshot): TraitVector {
         Chaos: chaos,
     }
 
+    // Undergrad & Early Career Relative Contrast Scaling:
+    // Raw scores for early-career devs often compress into a narrow band (e.g. 20–60).
+    // We blend 60% absolute raw score + 40% relative contrast stretching so that
+    // each student's personal coding strengths shine clearly across the 0–100 range.
+    const rawValues = TRAIT_IDS.map((id) => scores[id])
+    const minVal = Math.min(...rawValues)
+    const maxVal = Math.max(...rawValues)
+    const range = maxVal - minVal
+
+    if (range > 5) {
+        for (const trait of TRAIT_IDS) {
+            const normalized = (scores[trait] - minVal) / range
+            const relativeValue = 25 + normalized * 70
+            scores[trait] = clamp(
+                Math.round(scores[trait] * 0.6 + relativeValue * 0.4),
+                0,
+                100
+            )
+        }
+    }
+
     for (const trait of TRAIT_IDS) {
         scores[trait] = clamp(scores[trait], 0, 100)
     }

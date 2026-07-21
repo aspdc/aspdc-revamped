@@ -1,6 +1,7 @@
 'use server'
 
 import { headers } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 import { replaceLabAchievements, upsertLabProfile } from '@/db/mutations'
 import { findLabProfileByUserId } from '@/db/queries'
 import {
@@ -112,6 +113,13 @@ export async function analyzeLabProfile(): Promise<AnalyzeLabProfileResult> {
                 unlockedAt: analyzedAt,
             }))
         )
+
+        try {
+            revalidatePath(`/lab/${analysis.githubUsername}`)
+            revalidatePath('/lab')
+        } catch {
+            // Ignore cache revalidation errors if outside request context
+        }
 
         return {
             ok: true,

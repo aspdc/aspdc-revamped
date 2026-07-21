@@ -12,6 +12,8 @@ import { TRAIT_IDS, type TraitId, type TraitVector } from './types'
 
 export type ProfileDisplayData = {
     primaryCharacter: CharacterProfile
+    primarySimilarity: number
+    developerScore: number
     topMatches: CharacterMatch[]
     achievements: Achievement[]
     traits: TraitVector
@@ -26,12 +28,16 @@ export function getProfileDisplayData(
     let topMatches: CharacterMatch[]
     let achievements: Achievement[]
     let traits: TraitVector
+    let developerScore: number
+    let primarySimilarity: number
 
     if (cached?.snapshot) {
         const pipelineResult = runAnalysisPipeline(cached.snapshot)
         topMatches = pipelineResult.characterMatches
         achievements = pipelineResult.achievements
         traits = pipelineResult.traitScores
+        developerScore = pipelineResult.developerScore
+        primarySimilarity = pipelineResult.characterSimilarity
     } else {
         // Reconstruct TraitVector from stored profile
         traits = emptyTraitVector(40)
@@ -46,6 +52,9 @@ export function getProfileDisplayData(
         }
 
         topMatches = assignCharacter(traits)
+        developerScore = profile.developerScore
+        primarySimilarity =
+            topMatches[0]?.similarity ?? profile.characterSimilarity
 
         if (dbAchievementIds && dbAchievementIds.length > 0) {
             const idSet = new Set(dbAchievementIds)
@@ -62,17 +71,17 @@ export function getProfileDisplayData(
         }
     }
 
-    let primaryCharacter = CHARACTER_PROFILES.find(
-        (c) => c.id === profile.characterId
-    )
+    const topMatch = topMatches[0]
+    let primaryCharacter: CharacterProfile | undefined
+
+    if (topMatch) {
+        primaryCharacter = CHARACTER_PROFILES.find((c) => c.id === topMatch.id)
+    }
 
     if (!primaryCharacter) {
-        const topMatch = topMatches[0]
-        if (topMatch) {
-            primaryCharacter = CHARACTER_PROFILES.find(
-                (c) => c.id === topMatch.id
-            )
-        }
+        primaryCharacter = CHARACTER_PROFILES.find(
+            (c) => c.id === profile.characterId
+        )
     }
 
     if (!primaryCharacter) {
@@ -84,8 +93,15 @@ export function getProfileDisplayData(
         }
     }
 
+    // Ensure primarySimilarity is strictly synchronized with topMatches[0]
+    if (topMatch) {
+        primarySimilarity = topMatch.similarity
+    }
+
     return {
         primaryCharacter,
+        primarySimilarity,
+        developerScore,
         topMatches,
         achievements,
         traits,

@@ -73,7 +73,7 @@ describe('getProfileDisplayData', () => {
     it('resolves primary character, top 3 matches, and unlocked achievements from profile with valid snapshot', () => {
         const data = getProfileDisplayData(mockProfile)
 
-        expect(data.primaryCharacter.id).toBe('walter-white')
+        expect(data.primaryCharacter.id).toBe(data.topMatches[0].id)
         expect(data.topMatches).toHaveLength(3)
         expect(data.topMatches[0].similarity).toBeGreaterThan(0)
         expect(data.achievements.length).toBeGreaterThan(0)
