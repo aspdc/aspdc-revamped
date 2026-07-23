@@ -1,10 +1,13 @@
 allowBuilds:
-    esbuild: true
-    sharp: true
-    unrs-resolver: true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
 minimumReleaseAgeExclude:
-    - esbuild@0.24.3
-    - postcss@8.5.10
+  - esbuild@0.24.3
+  - postcss@8.5.10
+  - sharp@0.35.0
+  - next@16.2.11
 overrides:
-    esbuild@<=0.24.2: ^0.28.1
-    postcss@<8.5.10: ^8.5.10
+  esbuild@<=0.24.2: ^0.28.1
+  postcss@<8.5.10: ^8.5.10
+  sharp@<0.35.0: ^0.35.0
