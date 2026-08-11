@@ -12,7 +12,8 @@
         "prepare": "husky",
         "db:push": "drizzle-kit push",
         "db:generate": "drizzle-kit generate",
-        "db:migrate": "drizzle-kit migrate"
+        "db:migrate": "drizzle-kit migrate",
+        "create-admin": "pnpm exec tsx scripts/create-admin.ts"
     },
     "lint-staged": {
         "*.{js,ts,tsx,css,md}": "pnpm dlx prettier --write ."
