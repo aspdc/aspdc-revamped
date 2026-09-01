@@ -7,7 +7,6 @@
                 "name": "Dr. Nikita Joshi",
                 "role": "Faculty Mentor",
                 "avatar": "/team/nikitamam.jpeg",
-                "blur": "/team/tiny/nikitamam.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
@@ -20,25 +19,23 @@
         "members": [
             {
                 "id": 2,
-                "name": "Nirav Maheta",
+                "name": "Samarth Shrivastava",
                 "role": "President",
-                "avatar": "/team/nirav.jpg",
-                "blur": "/team/tiny/nirav.jpeg",
-                "github": "https://github.com/ni3rav",
+                "avatar": "/team/Samarth.jpeg",
+                "github": "https://github.com/samarthshrivastava",
                 "instagram": null,
-                "x": "https://x.com/ni3rav",
-                "linkedin": "https://linkedin.com/in/nirav-mht"
+                "x": null,
+                "linkedin": "https://linkedin.com/in/samarthshrivastava"
             },
             {
                 "id": 3,
-                "name": "Sahil Patel",
+                "name": "Avyay Kachhia",
                 "role": "Vice President",
-                "avatar": "/team/sahil.jpg",
-                "blur": "/team/tiny/sahil.jpeg",
-                "github": "https://github.com/Sahil-796",
-                "instagram": "https://www.instagram.com/sahil_patel006__",
-                "x": "https://x.com/SahilPa82684047",
-                "linkedin": null
+                "avatar": "/team/avyay.jpeg",
+                "github": "https://github.com/avyaykachhia",
+                "instagram": "https://www.instagram.com/avyaykachhia",
+                "x": "https://x.com/avyay_kachhia",
+                "linkedin": "https://linkedin.com/in/avyaykachhia"
             }
         ]
     },
@@ -47,140 +44,53 @@
         "members": [
             {
                 "id": 4,
-                "name": "Sahil Patel",
-                "role": "Lead",
-                "avatar": "/team/sahil.jpg",
-                "blur": "/team/tiny/sahil.jpeg",
-                "github": "https://github.com/Sahil-796",
-                "instagram": "https://www.instagram.com/sahil_patel006__",
-                "x": "https://x.com/SahilPa82684047",
+                "name": "Shashank Gadhvi",
+                "role": "Head",
+                "avatar": "/team/shashank.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
                 "linkedin": null
             },
             {
                 "id": 5,
-                "name": "Rudra Patel",
+                "name": "Vihaan Shah",
                 "role": "Member",
-                "avatar": "/team/rudra.jpeg",
-                "blur": "/team/tiny/rudra.jpeg",
-                "github": "https://github.com/RudraPatel5435",
+                "avatar": "/team/vihan.jpeg",
+                "github": null,
                 "instagram": null,
-                "x": "https://x.com/RudraPatel5435",
+                "x": null,
                 "linkedin": null
             },
             {
                 "id": 6,
-                "name": "Dwij Gosai",
+                "name": "Pakshal Shah",
                 "role": "Member",
-                "avatar": "/team/dwij.jpg",
-                "blur": "/team/tiny/dwij.jpeg",
-                "github": "https://github.com/Dwij45",
-                "instagram": "https://www.instagram.com/dwijgosai/?hl=en",
-                "x": "https://x.com/Dwij45",
-                "linkedin": "http://www.linkedin.com/in/dwij-gosai"
-            },
-            {
-                "id": 67,
-                "name": "Manan Patel",
-                "role": "Member",
-                "avatar": "/team/manan.jpg",
-                "blur": "/team/tiny/manan.jpg",
-                "github": "https://github.com/MANANPATEL7310",
-                "instagram": null,
-                "x": null,
-                "linkedin": "https://www.linkedin.com/in/manan-patel-753560348/"
-            },
-            {
-                "id": 7,
-                "name": "Tirth Choksi",
-                "role": "Member",
-                "avatar": "/team/tirthc.jpg",
-                "blur": "/team/tiny/tirthc.jpeg",
-                "github": "https://github.com/tirth12345",
-                "instagram": "https://www.instagram.com/_tirth_chokshi_05?igsh=ZnBjb2g5Z3ljMjNk",
-                "x": "https://x.com/Noone_Tirth?t=fOFXjXpTrnbDCFK4eXoJcw&s=09",
-                "linkedin": "https://www.linkedin.com/in/tirth-chokshi-44b355295?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-            },
-            {
-                "id": 8,
-                "name": "Sharanya Nagar",
-                "role": "Member",
-                "avatar": "/team/sharanya.jpg",
-                "blur": "/team/tiny/sharanya.jpeg",
-                "github": "https://github.com/sharancreates",
-                "instagram": "https://www.instagram.com/alwaysharann?igsh=MXR0YjhwMHJzZWhsZg==",
-                "x": null,
-                "linkedin": "https://www.linkedin.com/in/sharanya-nagar-5a1908336?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-            }
-        ]
-    },
-    {
-        "domainName": "DSA",
-        "members": [
-            {
-                "id": 9,
-                "name": "Pratham Gavadia",
-                "role": "Lead",
-                "avatar": "/team/prathams.jpg",
-                "blur": "/team/tiny/prathams.jpeg",
+                "avatar": "/team/pakshal.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
                 "linkedin": null
             },
             {
-                "id": 10,
-                "name": "Pruthvi Navadiya",
+                "id": 7,
+                "name": "Riti Shah",
                 "role": "Member",
-                "avatar": "/team/pruthvi.jpeg",
-                "blur": "/team/tiny/pruthvi.jpeg",
-                "github": "https://github.com/Pruthvi4563",
-                "instagram": "https://www.instagram.com/pruthvi_navadiya02",
-                "x": "https://x.com/PeaceKeeper_1",
-                "linkedin": "https://www.linkedin.com/in/pruthvi-navadiya"
-            },
-            {
-                "id": 11,
-                "name": "Akshita Jariwala",
-                "role": "Member",
-                "avatar": "/team/akshita.jpeg",
-                "blur": "/team/tiny/akshita.jpeg",
+                "avatar": "/team/riti.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
-                "linkedin": "https://www.linkedin.com/in/akshita-jariwala-3b3526375/"
+                "linkedin": null
             },
             {
-                "id": 89,
-                "name": "Hardik Manglani",
+                "id": 8,
+                "name": "Jatin Kevlani",
                 "role": "Member",
-                "avatar": "/team/hardik.jpeg",
-                "blur": "/team/tiny/hardik.jpeg",
-                "github": "https://github.com/Hardik21806",
+                "avatar": "/team/jatin.jpeg",
+                "github": null,
                 "instagram": null,
                 "x": null,
-                "linkedin": "https://www.linkedin.com/in/hardik-manglani-152b04330"
-            },
-            {
-                "id": 12,
-                "name": "Jhanvi Patel",
-                "role": "Member",
-                "avatar": "/team/jhanvi.jpg",
-                "blur": "/team/tiny/jhanvi.jpeg",
-                "github": "https://github.com/jhanvi857",
-                "instagram": "https://www.instagram.com/jhanvi_857/",
-                "x": "https://x.com/jhanvi_857",
-                "linkedin": "https://www.linkedin.com/in/jhanvi-patel-0a032b35a/"
-            },
-            {
-                "id": 13,
-                "name": "Tirth Jain",
-                "role": "Member",
-                "avatar": "/team/tirthj.jpg",
-                "blur": "/team/tiny/tirth.jpeg",
-                "github": "https://github.com/Jain-Tirth",
-                "instagram": "https://instagram.com/_jain_tirth/",
-                "x": null,
-                "linkedin": "https://linkedin.com/in/tirth-jain-9b0616318/"
+                "linkedin": null
             }
         ]
     },
@@ -188,33 +98,75 @@
         "domainName": "Machine Learning",
         "members": [
             {
-                "id": 14,
-                "name": "Vrajesh Sharma",
-                "role": "Lead",
-                "avatar": "/team/vrajesh.jpg",
-                "blur": "/team/tiny/vrajesh.jpeg",
-                "github": "https://github.com/Vrajesh-Sharma/",
-                "instagram": "https://www.instagram.com/its_vrajesh_sharma/",
-                "x": "https://x.com/vrajesharma/",
-                "linkedin": "https://www.linkedin.com/in/vrajesharma-7-dsa/"
+                "id": 9,
+                "name": "Sharv Mehta",
+                "role": "Head",
+                "avatar": "/team/sharv.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
             },
             {
-                "id": 27,
-                "name": "Mohit Manglani",
+                "id": 10,
+                "name": "Darshil Modi",
                 "role": "Member",
-                "avatar": "/team/mohit.jpeg",
-                "blur": "/team/tiny/mohit.jpeg",
-                "github": "https://github.com/xXMohitXx",
-                "instagram": "https://www.instagram.com/mohit.127.0.0.1/",
-                "x": "https://x.com/MManglani777?t=8d524TJm5PpGwN8cuTA5nQ&s=09",
-                "linkedin": "https://www.linkedin.com/in/mohit-manglani-412997220/"
+                "avatar": "/team/darshil.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 11,
+                "name": "Hitarth Patel",
+                "role": "Member",
+                "avatar": "/team/hitarth.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 12,
+                "name": "Zeel Desai",
+                "role": "Member",
+                "avatar": "/team/zeel.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 13,
+                "name": "Prachi Parekh",
+                "role": "Member",
+                "avatar": "/team/prachi_p.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            }
+        ]
+    },
+    {
+        "domainName": "DSA",
+        "members": [
+            {
+                "id": 14,
+                "name": "Hardik Manglani",
+                "role": "Head",
+                "avatar": "/team/hardik.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
             },
             {
                 "id": 15,
-                "name": "Saurabh Singh",
+                "name": "Keshvi Amlani",
                 "role": "Member",
-                "avatar": "/team/saurabh.jpg",
-                "blur": "/team/tiny/saurabh.jpeg",
+                "avatar": "/team/keshvi.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
@@ -222,32 +174,84 @@
             },
             {
                 "id": 16,
-                "name": "Sharv Mehta",
+                "name": "Kavya Bhavsar",
                 "role": "Member",
-                "avatar": "/team/sharv.jpg",
-                "blur": "/team/tiny/sharv.jpeg",
-                "github": "https://github.com/Pokeavenger/",
-                "instagram": "https://www.instagram.com/sharv_0709",
+                "avatar": "/team/kavya.jpeg",
+                "github": null,
+                "instagram": null,
                 "x": null,
-                "linkedin": "https://www.linkedin.com/in/sharv-mehta-a0425329b"
+                "linkedin": null
             },
             {
                 "id": 17,
-                "name": "Samarth Shrivastava",
+                "name": "Adithya Srinivasan",
                 "role": "Member",
-                "avatar": "/team/samarth.jpeg",
-                "blur": "/team/tiny/samarth.jpeg",
-                "github": "https://github.com/Bazuka13",
-                "instagram": "https://www.instagram.com/naam.samarth?igsh=MWxuN2JvcGx3bWtjOQ==",
+                "avatar": "/team/aditya.jpeg",
+                "github": null,
+                "instagram": null,
                 "x": null,
-                "linkedin": "https://www.linkedin.com/in/samarth-srivastava-862160326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                "linkedin": null
             },
             {
                 "id": 18,
-                "name": "Dhruval Patel",
+                "name": "Jitaan Rathod",
                 "role": "Member",
-                "avatar": "/team/dhruval.jpg",
-                "blur": "/team/tiny/dhruval.jpeg",
+                "avatar": "/team/Jitaan.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            }
+        ]
+    },
+    {
+        "domainName": "Game Development",
+        "members": [
+            {
+                "id": 19,
+                "name": "Spandan Patel",
+                "role": "Head",
+                "avatar": "/team/spandan.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 20,
+                "name": "Vihaan Sompura",
+                "role": "Member",
+                "avatar": "/team/vihaan.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 21,
+                "name": "Parikh Aaryan Nareshkumar",
+                "role": "Member",
+                "avatar": "/team/aaryan.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 22,
+                "name": "Kalp Joshi",
+                "role": "Member",
+                "avatar": "/team/kalp.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
+            {
+                "id": 23,
+                "name": "Srishti Singh",
+                "role": "Member",
+                "avatar": "/team/srishti.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
@@ -259,22 +263,20 @@
         "domainName": "Design",
         "members": [
             {
-                "id": 19,
-                "name": "Yaksh Vadaliya",
-                "role": "Lead",
-                "avatar": "/team/yaksh2.jpg",
-                "blur": "/team/tiny/yaksh2.jpeg",
+                "id": 24,
+                "name": "Vrushti Devani",
+                "role": "Head",
+                "avatar": "/team/vrushti.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
                 "linkedin": null
             },
             {
-                "id": 20,
-                "name": "Ved Parmar",
-                "role": "Lead",
-                "avatar": "/team/ved.jpg",
-                "blur": "/team/tiny/ved.jpeg",
+                "id": 25,
+                "name": "Yelina Jain",
+                "role": "Member",
+                "avatar": "/team/yelina.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
@@ -286,75 +288,54 @@
         "domainName": "Public Relations",
         "members": [
             {
-                "id": 21,
-                "name": "Deep Adatiya",
-                "role": "Lead",
-                "avatar": "/team/deep2.jpg",
-                "blur": "/team/tiny/deep2.jpeg",
+                "id": 26,
+                "name": "Harsh Thakar",
+                "role": "Head",
+                "avatar": "/team/Harsh.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
                 "linkedin": null
             },
             {
-                "id": 22,
-                "name": "Malhar Patel",
-                "role": "Member",
-                "avatar": "/team/malhar.jpeg",
-                "blur": "/team/tiny/malhar.jpeg",
+                "id": 27,
+                "name": "Moksh Shah",
+                "role": "Head",
+                "avatar": "/team/moksh.jpeg",
                 "github": null,
                 "instagram": null,
                 "x": null,
                 "linkedin": null
             },
             {
-                "id": 23,
+                "id": 28,
                 "name": "Darshi Prajapati",
                 "role": "Member",
-                "avatar": "/team/darshi.jpg",
-                "blur": "/team/tiny/darshi.jpeg",
-                "github": "https://github.com/darshi1707",
-                "instagram": "https://www.instagram.com/darshi.104?igsh=ZXE2ZXlkdDN5bmM=",
-                "x": null,
-                "linkedin": "https://www.linkedin.com/in/darshi-prajapati-aa0116325"
-            },
-            {
-                "id": 24,
-                "name": "Avyay Kachhia",
-                "role": "Member",
-                "avatar": "/team/avyay.jpg",
-                "blur": "/team/tiny/avyay.jpeg",
+                "avatar": "/team/Darshi.jpeg",
                 "github": null,
-                "instagram": "https://www.instagram.com/_avi.y/",
+                "instagram": null,
                 "x": null,
-                "linkedin": "https://www.linkedin.com/me?trk=p_mwlite_feed-secondary_nav"
+                "linkedin": null
             },
             {
-                "id": 25,
-                "name": "Heer Rana",
+                "id": 29,
+                "name": "Karya Soni",
                 "role": "Member",
-                "avatar": "/team/heer.jpg",
-                "blur": "/team/tiny/heer.jpeg",
-                "github": "https://github.com/HeerRana",
-                "instagram": "https://www.instagram.com/heer_rana02",
-                "x": "https://x.com/heer_rana3",
-                "linkedin": "https://www.linkedin.com/in/heer-rana-604222304"
-            }
-        ]
-    },
-    {
-        "domainName": "Social Media",
-        "members": [
+                "avatar": "/team/karya.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
+            },
             {
-                "id": 26,
-                "name": "Pratham Patel",
-                "role": "Lead",
-                "avatar": "/team/pratham-patel.jpg",
-                "blur": "/team/tiny/pratham-patel.jpeg",
-                "github": "https://github.com/Patty122",
-                "instagram": "https://www.instagram.com/_._prathammm._?igsh=MXg5ajF5Zmk3amxpbw%3D%3D&utm_source=qr",
-                "x": "https://x.com/prathamm333?s=21",
-                "linkedin": "https://www.linkedin.com/in/pratham-patel-a53a7937a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                "id": 30,
+                "name": "Prachi Khuha",
+                "role": "Member",
+                "avatar": "/team/prachi.jpeg",
+                "github": null,
+                "instagram": null,
+                "x": null,
+                "linkedin": null
             }
         ]
     }
